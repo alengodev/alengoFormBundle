@@ -7,7 +7,9 @@ use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
 class SaveFormService implements SaveFormInterface
 {
 
-    public function saveFormDataFromRequest(): FormData
+
+
+    public function saveFormDataFromRequest(array $data): FormData
     {
         // TODO: Implement saveFormDataFromRequest() method.
     }
