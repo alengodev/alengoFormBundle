@@ -22,12 +22,32 @@
 ### Install the bundle
 
 Execute the following [composer](https://getcomposer.org/) command to add the bundle to the dependencies of your
-project:
+project after you set the following lines in your Composer.json:
+
+ ```yaml
+
+"require": {
+  ..
+  "alengo/alengo-form-bundle": "dev-main"
+},
+
+...
+
+"repositories": [
+  {
+    "type": "vcs",
+    "url": "https://github.com/alengodev/alengoFormBundle"
+  }
+]
+
+ ```
+
 
 ```bash
-
-WIP
+composer up
 ```
+
+
 
 ### Enable the bundle
 
@@ -39,3 +59,4 @@ Enable the bundle by adding it to the list of registered bundles in the `config/
      Alengo\Bundle\AlengoFormBundle\AlengoFormBundle::class => ['all' => true],
  ];
  ```
+
