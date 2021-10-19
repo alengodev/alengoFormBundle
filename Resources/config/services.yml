@@ -1,0 +1,9 @@
+services:
+  Alengo\Bundle\AlengoFormBundle\Service\SaveFormService:
+    public: 'true'
+    arguments:
+      [ '@Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository' ]
+  Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository:
+    public: 'true'
+    arguments:
+      [ '@doctrine' ]

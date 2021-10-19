@@ -4,6 +4,9 @@ namespace Alengo\Bundle\AlengoFormBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity(repositoryClass="Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository")
+ */
 class FormData
 {
 

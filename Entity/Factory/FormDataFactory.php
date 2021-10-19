@@ -3,8 +3,7 @@
 namespace Alengo\Bundle\AlengoFormBundle\Entity\Factory;
 
 use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Serializer;
+
 
 final class FormDataFactory
 {
