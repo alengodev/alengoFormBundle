@@ -60,3 +60,15 @@ Enable the bundle by adding it to the list of registered bundles in the `config/
  ];
  ```
 
+
+### Configure the Bundle
+
+Set the following config in your routes_admin.yaml
+
+ ```yaml
+app_events_api:
+  type: rest
+  prefix: /admin/api
+  resource: Alengo\Bundle\AlengoFormBundle\Controller\Admin\FormDataController
+  name_prefix: app.
+ ```
