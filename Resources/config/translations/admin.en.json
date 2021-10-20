@@ -1,5 +1,6 @@
 
 {
   "sulu_admin.locale": "Location",
-  "sulu_admin.webspace": "Webspace"
+  "sulu_admin.webspace": "Webspace",
+  "app.form_datas": "Form Data's"
 }
