@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<list xmlns="http://schemas.sulu.io/list-builder/list">
+    <key>form_datas</key>
+
+    <properties>
+        <property name="id" visibility="no" translation="sulu_admin.id">
+            <field-name>id</field-name>
+            <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
+        </property>
+
+        <property name="webspaceKey" visibility="always" searchability="yes" translation="sulu_admin.webspace">
+            <field-name>webspaceKey</field-name>
+            <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
+        </property>
+    </properties>
+</list>

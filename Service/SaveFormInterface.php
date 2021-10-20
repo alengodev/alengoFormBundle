@@ -7,6 +7,6 @@ use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
 interface SaveFormInterface
 {
 
-    public function saveFormDataFromRequest(array $data) : FormData;
+    public function saveFormDataFromRequest(array $data, string $webspace, string $location): FormData;
 
 }

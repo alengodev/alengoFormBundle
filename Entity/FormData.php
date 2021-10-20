@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 class FormData
 {
 
+    const RESOURCE_KEY = 'formData';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
