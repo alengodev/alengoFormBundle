@@ -3,14 +3,33 @@
     <key>form_datas</key>
 
     <properties>
-        <property name="id" visibility="no" translation="sulu_admin.id">
+        <property name="id" visibility="yes" translation="sulu_admin.id">
             <field-name>id</field-name>
+            <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
+        </property>
+
+        <property name="locale" visibility="always" searchability="yes" translation="sulu_admin.locale">
+            <field-name>locale</field-name>
             <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
         </property>
 
         <property name="webspaceKey" visibility="always" searchability="yes" translation="sulu_admin.webspace">
             <field-name>webspaceKey</field-name>
             <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
+        </property>
+
+        <property name="created" type="datetime" visibility="yes" searchability="yes" translation="sulu_admin.created">
+            <field-name>created</field-name>
+            <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
+
+            <filter type="datetime" />
+        </property>
+
+        <property name="changed" type="datetime" visibility="yes" searchability="yes" translation="sulu_admin.changed">
+            <field-name>changed</field-name>
+            <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
+
+            <filter type="datetime" />
         </property>
     </properties>
 </list>
