@@ -26,5 +26,46 @@
                 <title>sulu_admin.created</title>
             </meta>
         </property>
+
+
+        <block name="data" default-type="field" minOccurs="0">
+            <meta>
+                <title lang="de">Formular Inhalt</title>
+                <title lang="en">Form Content</title>
+            </meta>
+
+            <params>
+                <param name="add_button_text">
+                    <meta>
+                        <title lang="en">Add Field</title>
+                        <title lang="de">Feld hinzufügen</title>
+                    </meta>
+                </param>
+            </params>
+
+            <types>
+                <type name="field">
+                    <meta>
+                        <title lang="de">Formular Feld</title>
+                        <title lang="en">Form field</title>
+                    </meta>
+
+                    <properties>
+                        <property name="label" type="text_line" disabledCondition="true">
+                            <meta>
+                                <title lang="de">Label</title>
+                                <title lang="en">Label</title>
+                            </meta>
+                        </property>
+                        <property name="data" type="text_line">
+                            <meta>
+                                <title lang="de">Feld</title>
+                                <title lang="en">Feld</title>
+                            </meta>
+                        </property>
+                    </properties>
+                </type>
+            </types>
+        </block>
     </properties>
 </form>

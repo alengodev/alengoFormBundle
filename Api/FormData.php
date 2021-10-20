@@ -81,10 +81,17 @@ class FormData
      */
     public function getData(): array
     {
+        $data = [];
         if (!$this->entity->getData()) {
-        return [];
+            return $data;
         }
-
-        return $this->entity->getData();
+        foreach ($this->entity->getData() as $key => $dataElement) {
+            $data[] = [
+                'type' => 'field',
+                'data' => $dataElement,
+                'label' => $key
+            ];
+        }
+        return $data;
     }
 }
