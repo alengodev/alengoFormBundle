@@ -72,3 +72,8 @@ app_form_data_api:
   resource: Alengo\Bundle\AlengoFormBundle\Controller\Admin\FormDataController
   name_prefix: app.
  ```
+
+Define you default Sender Email in ENV Config.
+ ```.dotenv
+    DEFAULT_SENDER_MAIL=test@test.de
+ ```
