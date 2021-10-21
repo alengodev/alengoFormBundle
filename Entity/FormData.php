@@ -42,7 +42,7 @@ class FormData
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private $senderMail;
+    private $userMail;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -161,16 +161,17 @@ class FormData
     /**
      * @return mixed
      */
-    public function getSenderMail()
+    public function getUserMail()
     {
-        return $this->senderMail;
+        return $this->userMail;
     }
 
     /**
-     * @param mixed $senderMail
+     * @param mixed $userMail
      */
-    public function setSenderMail($senderMail): void
+    public function setUserMail($userMail): void
     {
-        $this->senderMail = $senderMail;
+        $this->userMail = $userMail;
     }
+
 }

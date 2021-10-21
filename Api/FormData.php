@@ -86,12 +86,12 @@ class FormData
 
     /**
      * @VirtualProperty
-     * @SerializedName("senderMail")
+     * @SerializedName("userMail")
      * @Groups({"fullFormData"})
      */
-    public function getSenderMail(): ?string
+    public function getUserMail(): ?string
     {
-        return $this->entity->getSenderMail();
+        return $this->entity->getUserMail();
     }
 
     /**

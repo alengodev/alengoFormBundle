@@ -12,9 +12,9 @@
                 <title>sulu_admin.receiver.mail</title>
             </meta>
         </property>
-        <property name="senderMail" type="text_line" mandatory="true" disabledCondition="true" colspan="6">
+        <property name="userMail" type="text_line" mandatory="true" disabledCondition="true" colspan="6">
             <meta>
-                <title>sulu_admin.sender.mail</title>
+                <title>sulu_admin.user.mail</title>
             </meta>
         </property>
         <property name="locale" type="text_line" mandatory="true" disabledCondition="true" colspan="6">

@@ -2,7 +2,7 @@ services:
   Alengo\Bundle\AlengoFormBundle\Service\SaveFormService:
     public: 'true'
     arguments:
-      [ '@Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository','@Alengo\Bundle\AlengoFormBundle\Entity\Factory\FormDataFactory' ]
+      [ '@Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository','@Alengo\Bundle\AlengoFormBundle\Entity\Factory\FormDataFactory','%env(resolve:DEFAULT_SENDER_MAIL)%' ]
   Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository:
     public: 'true'
     arguments:
