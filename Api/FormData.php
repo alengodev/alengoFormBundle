@@ -76,6 +76,26 @@ class FormData
 
     /**
      * @VirtualProperty
+     * @SerializedName("receiverMail")
+     * @Groups({"fullFormData"})
+     */
+    public function getReceiverMail(): ?string
+    {
+        return $this->entity->getReceiverMail();
+    }
+
+    /**
+     * @VirtualProperty
+     * @SerializedName("senderMail")
+     * @Groups({"fullFormData"})
+     */
+    public function getSenderMail(): ?string
+    {
+        return $this->entity->getSenderMail();
+    }
+
+    /**
+     * @VirtualProperty
      * @SerializedName("data")
      * @Groups({"fullFormData"})
      */

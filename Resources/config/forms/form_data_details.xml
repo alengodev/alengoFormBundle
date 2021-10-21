@@ -6,6 +6,17 @@
     <key>form_data_details</key>
 
     <properties>
+
+        <property name="receiverMail" type="text_line" mandatory="true" disabledCondition="true" colspan="6">
+            <meta>
+                <title>sulu_admin.receiver.mail</title>
+            </meta>
+        </property>
+        <property name="senderMail" type="text_line" mandatory="true" disabledCondition="true" colspan="6">
+            <meta>
+                <title>sulu_admin.sender.mail</title>
+            </meta>
+        </property>
         <property name="locale" type="text_line" mandatory="true" disabledCondition="true" colspan="6">
             <meta>
                 <title>sulu_admin.locale</title>

@@ -5,17 +5,40 @@ namespace Alengo\Bundle\AlengoFormBundle\Entity\Factory;
 use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
 
 
-final class FormDataFactory
+class FormDataFactory
 {
-    static function generateFormDataByData(array $data, string $webspaceKey, string $location): FormData
+    public function generateFormDataByData(array $data, string $webspaceKey, string $location): FormData
     {
         $formData = new FormData();
         $formData->setData($data);
+
+        if ($this->getProperty($data, 'email')) {
+            $formData->setReceiverMail($this->getProperty($data, 'email'));
+        }
+
         $formData->setCreated(new \DateTime());
         $formData->setChanged(new \DateTime());
         $formData->setLocale($location);
         $formData->setWebspaceKey($webspaceKey);
 
         return $formData;
+    }
+
+    /**
+     * Return property for key or given default value.
+     *
+     * @param array $data
+     * @param string $key
+     * @param string $default
+     *
+     * @return null|string
+     */
+    protected function getProperty($data, $key, $default = null)
+    {
+        if (\array_key_exists($key, $data)) {
+            return $data[$key];
+        }
+
+        return $default;
     }
 }

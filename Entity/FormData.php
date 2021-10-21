@@ -35,6 +35,16 @@ class FormData
     private $data;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $receiverMail;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $senderMail;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $created;
@@ -130,5 +140,37 @@ class FormData
     public function setChanged($changed): void
     {
         $this->changed = $changed;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReceiverMail()
+    {
+        return $this->receiverMail;
+    }
+
+    /**
+     * @param mixed $receiverMail
+     */
+    public function setReceiverMail($receiverMail): void
+    {
+        $this->receiverMail = $receiverMail;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSenderMail()
+    {
+        return $this->senderMail;
+    }
+
+    /**
+     * @param mixed $senderMail
+     */
+    public function setSenderMail($senderMail): void
+    {
+        $this->senderMail = $senderMail;
     }
 }

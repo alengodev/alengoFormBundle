@@ -8,6 +8,16 @@
             <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
         </property>
 
+        <property name="receiverMail" visibility="always" searchability="yes" translation="sulu_admin.receiver.mail">
+            <field-name>receiverMail</field-name>
+            <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
+        </property>
+
+        <property name="senderMail" visibility="always" searchability="yes" translation="sulu_admin.sender.mail">
+            <field-name>senderMail</field-name>
+            <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
+        </property>
+
         <property name="locale" visibility="always" searchability="yes" translation="sulu_admin.locale">
             <field-name>locale</field-name>
             <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>

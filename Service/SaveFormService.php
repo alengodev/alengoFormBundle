@@ -9,10 +9,15 @@ use Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository;
 class SaveFormService implements SaveFormInterface
 {
     private FormDataRepository $repository;
+    private FormDataFactory $factory;
 
-    public function __construct(FormDataRepository $repository)
+    public function __construct(
+        FormDataRepository $repository,
+        FormDataFactory $factory
+    )
     {
         $this->repository = $repository;
+        $this->factory = $factory;
     }
 
     /**
@@ -20,7 +25,7 @@ class SaveFormService implements SaveFormInterface
      */
     public function saveFormDataFromRequest(array $data, string $webspace, string $location): FormData
     {
-        $formData = FormDataFactory::generateFormDataByData($data, $webspace, $location);
+        $formData = $this->factory->generateFormDataByData($data, $webspace, $location);
         $this->repository->save($formData);
         return $formData;
     }
