@@ -68,12 +68,40 @@
                                 <title lang="en">Label</title>
                             </meta>
                         </property>
-                        <property name="data" type="text_line">
+                        <property name="data" type="text_line" disabledCondition="true">
                             <meta>
                                 <title lang="de">Feld</title>
                                 <title lang="en">Feld</title>
                             </meta>
                         </property>
+                        <block name="comments" default-type="comment" minOccurs="0">
+                            <meta>
+                                <title lang="de">Kommentare</title>
+                                <title lang="en">Comments</title>
+                            </meta>
+
+                            <params>
+                                <param name="add_button_text">
+                                    <meta>
+                                        <title lang="en">Add Comment</title>
+                                        <title lang="de">Kommentar hinzufügen</title>
+                                    </meta>
+                                </param>
+                            </params>
+
+                            <types>
+                                <type name="comment">
+                                    <meta>
+                                        <title lang="de">Kommentare</title>
+                                        <title lang="en">Comments</title>
+                                    </meta>
+
+                                    <properties>
+                                        <property name="comment" type="text_editor"/>
+                                    </properties>
+                                </type>
+                            </types>
+                        </block>
                     </properties>
                 </type>
             </types>
