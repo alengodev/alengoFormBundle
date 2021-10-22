@@ -2,5 +2,7 @@
 {
   "sulu_admin.locale": "Location",
   "sulu_admin.webspace": "Webspace",
-  "app.form_datas": "Formular Daten"
+  "app.form_datas": "Formular Daten",
+  "sulu_admin.receiver.mail": "Empfänger E-mail",
+  "sulu_admin.user.mail": "User E-Mail"
 }
