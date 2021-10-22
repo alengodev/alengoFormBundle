@@ -11,17 +11,15 @@ class FormDataFactory
     {
         $formData = new FormData();
         $formData->setData($data);
-
         $formData->setReceiverMail($receiverMail);
-
-        if ($this->getProperty($data, 'email')) {
-            $formData->setUserMail($this->getProperty($data, 'email'));
-        }
-
         $formData->setCreated(new \DateTime());
         $formData->setChanged(new \DateTime());
         $formData->setLocale($location);
         $formData->setWebspaceKey($webspaceKey);
+
+        if ($this->getProperty($data, 'email')) {
+            $formData->setUserMail($this->getProperty($data, 'email'));
+        }
 
         return $formData;
     }
