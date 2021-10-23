@@ -12,6 +12,7 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use HandcraftedInTheAlps\RestRoutingBundle\Controller\Annotations\RouteResource;
 use Sulu\Component\Rest\AbstractRestController;
+use Sulu\Component\Rest\Exception\EntityNotFoundException;
 use Sulu\Component\Rest\ListBuilder\Doctrine\DoctrineListBuilderFactoryInterface;
 use Sulu\Component\Rest\ListBuilder\Metadata\FieldDescriptorFactoryInterface;
 use Sulu\Component\Rest\ListBuilder\PaginatedRepresentation;
@@ -134,5 +135,20 @@ class FormDataController extends AbstractRestController
         $view = $this->generateViewContent($apiEntity);
 
         return $this->handleView($view);
+    }
+
+    /**
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function deleteAction(int $id): Response
+    {
+        try {
+            $this->repository->remove($id);
+        } catch (\Exception $tnfe) {
+            throw new EntityNotFoundException(self::$entityName, $id);
+        }
+
+        return $this->handleView($this->view());
     }
 }

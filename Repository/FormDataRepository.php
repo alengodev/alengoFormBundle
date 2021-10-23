@@ -29,4 +29,15 @@ class FormDataRepository extends ServiceEntityRepository
         $this->getEntityManager()->persist($formData);
         $this->getEntityManager()->flush();
     }
+
+    public function remove(int $id): void
+    {
+        $this->getEntityManager()->remove(
+            $this->getEntityManager()->getReference(
+                $this->getClassName(),
+                $id
+            )
+        );
+        $this->getEntityManager()->flush();
+    }
 }
