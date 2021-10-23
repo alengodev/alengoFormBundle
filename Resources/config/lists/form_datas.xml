@@ -28,6 +28,13 @@
             <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
         </property>
 
+
+        <property name="countedComments" visibility="always" searchability="yes" translation="sulu_admin.counted.comments">
+            <field-name>countedComments</field-name>
+            <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
+        </property>
+
+
         <property name="created" type="datetime" visibility="yes" searchability="yes" translation="sulu_admin.created">
             <field-name>created</field-name>
             <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>

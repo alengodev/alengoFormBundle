@@ -60,6 +60,11 @@ class FormData
     private $changed;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $countedComments = 0;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -193,6 +198,22 @@ class FormData
     public function setComments($comments): void
     {
         $this->comments = $comments;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCountedComments()
+    {
+        return $this->countedComments;
+    }
+
+    /**
+     * @param mixed $countedComments
+     */
+    public function setCountedComments($countedComments): void
+    {
+        $this->countedComments = $countedComments;
     }
 
 }

@@ -29,7 +29,8 @@ class FormDataFactory
         $formData->setChanged(new \DateTime());
         if ($this->getProperty($data, 'comments')) {
             $formData->setComments($this->getProperty($data, 'comments'));
-            /**!TODO counter **/
+            $formData->setCountedComments(count($this->getProperty($data, 'comments')));
+
         }
 
         return $formData;
