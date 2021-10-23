@@ -45,6 +45,11 @@ class FormData
     private $userMail;
 
     /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $comments;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $created;
@@ -172,6 +177,22 @@ class FormData
     public function setUserMail($userMail): void
     {
         $this->userMail = $userMail;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     */
+    public function setComment($comments): void
+    {
+        $this->comments = $comments;
     }
 
 }
