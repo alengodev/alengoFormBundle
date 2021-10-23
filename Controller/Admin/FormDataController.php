@@ -6,6 +6,7 @@ namespace Alengo\Bundle\AlengoFormBundle\Controller\Admin;
 use Alengo\Bundle\AlengoFormBundle\Api\FormData as FormDataApi;
 use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
 use Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository;
+use Alengo\Bundle\AlengoFormBundle\Service\SaveFormService;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
@@ -51,13 +52,19 @@ class FormDataController extends AbstractRestController
      */
     private FormDataRepository $repository;
 
+    /**
+     * @var SaveFormService
+     */
+    private SaveFormService $formService;
+
     public function __construct(
         ViewHandlerInterface                $viewHandler,
         TokenStorageInterface               $tokenStorage,
         FieldDescriptorFactoryInterface     $fieldDescriptorFactory,
         DoctrineListBuilderFactoryInterface $listBuilderFactory,
         RestHelperInterface                 $restHelper,
-        FormDataRepository                  $repository
+        FormDataRepository                  $repository,
+        SaveFormService                     $formService
     )
     {
 
@@ -68,6 +75,7 @@ class FormDataController extends AbstractRestController
         $this->listBuilderFactory = $listBuilderFactory;
         $this->restHelper = $restHelper;
         $this->repository = $repository;
+        $this->formService = $formService;
     }
 
     public function cgetAction(): Response
@@ -112,5 +120,19 @@ class FormDataController extends AbstractRestController
         $context->setGroups(['fullFormData']);
 
         return $view->setContext($context);
+    }
+
+    public function putAction(int $id, Request $request): Response
+    {
+        $entity = $this->repository->findById($id)[0];
+        if (!$entity) {
+            throw new NotFoundHttpException();
+        }
+
+        $updatedEntity = $this->formService->updateFormData($entity, $request->request->all());
+        $apiEntity = $this->generateFormDataApiEntity($updatedEntity, 'en');
+        $view = $this->generateViewContent($apiEntity);
+
+        return $this->handleView($view);
     }
 }

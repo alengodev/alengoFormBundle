@@ -26,10 +26,19 @@ class SaveFormService implements SaveFormInterface
     /**
      * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
      */
-    public function saveFormDataFromRequest(array $data, string $webspace, string $location, string $receiverMail = NULL): FormData
+    public function saveFormDataFromRequest(array $data, string $webspace, string $location, string $receiverMail = NULL, bool $copy = false): FormData
     {
         $formData = $this->factory->generateFormDataByData($data, $webspace, $location, $receiverMail ?? $this->defaultReceiverMail);
         $this->repository->save($formData);
         return $formData;
     }
+
+    public function updateFormData(FormData $formData, array $data): FormData
+    {
+        $formData = $this->factory->updateFormDataByData($formData, $data);
+        $this->repository->save($formData);
+        return $formData;
+    }
+
+
 }

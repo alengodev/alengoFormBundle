@@ -190,7 +190,7 @@ class FormData
     /**
      * @param mixed $comments
      */
-    public function setComment($comments): void
+    public function setComments($comments): void
     {
         $this->comments = $comments;
     }

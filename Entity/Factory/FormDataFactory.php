@@ -24,6 +24,17 @@ class FormDataFactory
         return $formData;
     }
 
+    public function updateFormDataByData(FormData $formData, array $data): FormData
+    {
+        $formData->setChanged(new \DateTime());
+        if ($this->getProperty($data, 'comments')) {
+            $formData->setComments($this->getProperty($data, 'comments'));
+            /**!TODO counter **/
+        }
+
+        return $formData;
+    }
+
     /**
      * Return property for key or given default value.
      *

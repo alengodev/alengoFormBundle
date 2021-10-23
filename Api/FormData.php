@@ -114,4 +114,18 @@ class FormData
         }
         return $data;
     }
+
+    /**
+     * @VirtualProperty
+     * @SerializedName("comments")
+     * @Groups({"fullFormData"})
+     */
+    public function getComments(): array
+    {
+        if (!$this->entity->getComments()) {
+            return [];
+        }
+
+        return $this->entity->getComments();
+    }
 }
