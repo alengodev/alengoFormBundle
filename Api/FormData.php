@@ -128,4 +128,14 @@ class FormData
 
         return $this->entity->getComments();
     }
+
+    /**
+     * @VirtualProperty
+     * @SerializedName("countedComments")
+     * @Groups({"fullFormData"})
+     */
+    public function getCountedComments(): int
+    {
+        return $this->entity->getCountedComments();
+    }
 }
