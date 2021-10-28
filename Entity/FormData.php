@@ -45,6 +45,11 @@ class FormData
     private $userMail;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $category;
+
+    /**
      * @ORM\Column(type="json", nullable=true)
      */
     private $comments;
@@ -214,6 +219,22 @@ class FormData
     public function setCountedComments($countedComments): void
     {
         $this->countedComments = $countedComments;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category): void
+    {
+        $this->category = $category;
     }
 
 }

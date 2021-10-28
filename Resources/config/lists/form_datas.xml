@@ -18,6 +18,11 @@
             <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
         </property>
 
+        <property name="category" visibility="always" searchability="yes" translation="sulu_admin.category">
+            <field-name>category</field-name>
+            <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
+        </property>
+
         <property name="locale" visibility="always" searchability="yes" translation="sulu_admin.locale">
             <field-name>locale</field-name>
             <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>

@@ -32,14 +32,20 @@
                 <title>sulu_admin.counted.comments</title>
             </meta>
         </property>
-        <property name="changed" type="datetime" mandatory="true" disabledCondition="true" colspan="6">
+        <property name="changed" type="datetime" mandatory="true" disabledCondition="true" colspan="5">
             <meta>
                 <title>sulu_admin.changed</title>
             </meta>
         </property>
-        <property name="created" type="datetime" mandatory="true" disabledCondition="true" colspan="6">
+        <property name="created" type="datetime" mandatory="true" disabledCondition="true" colspan="5">
             <meta>
                 <title>sulu_admin.created</title>
+            </meta>
+        </property>
+
+        <property name="category" type="text_line" mandatory="true" disabledCondition="true" colspan="2">
+            <meta>
+                <title>sulu_admin.category</title>
             </meta>
         </property>
 

@@ -7,7 +7,7 @@ use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
 
 class FormDataFactory
 {
-    public function generateFormDataByData(array $data, string $webspaceKey, string $location, string $receiverMail): FormData
+    public function generateFormDataByData(array $data, string $webspaceKey, string $location, string $category, string $receiverMail): FormData
     {
         $formData = new FormData();
         $formData->setData($data);
@@ -16,6 +16,7 @@ class FormDataFactory
         $formData->setChanged(new \DateTime());
         $formData->setLocale($location);
         $formData->setWebspaceKey($webspaceKey);
+        $formData->setCategory($category);
 
         if ($this->getProperty($data, 'email')) {
             $formData->setUserMail($this->getProperty($data, 'email'));

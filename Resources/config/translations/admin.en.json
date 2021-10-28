@@ -5,5 +5,6 @@
   "app.form_datas": "Form Data's",
   "sulu_admin.receiver.mail": "Receiver E-mail",
   "sulu_admin.user.mail": "User E-Mail",
-  "sulu_admin.counted.comments": "Counted comments"
+  "sulu_admin.counted.comments": "Counted comments",
+  "sulu_admin.category": "Category"
 }

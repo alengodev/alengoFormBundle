@@ -138,4 +138,14 @@ class FormData
     {
         return $this->entity->getCountedComments();
     }
+
+    /**
+     * @VirtualProperty
+     * @SerializedName("category")
+     * @Groups({"fullFormData"})
+     */
+    public function getCategory(): ?string
+    {
+        return $this->entity->getCategory();
+    }
 }
