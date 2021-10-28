@@ -6,5 +6,5 @@ use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
 
 interface SendFormInterface
 {
-    public function sendFormDataAsMail(FormData $formData, string $template, string $senderMail, string $receiverMail, bool $copy = false);
+    public function sendFormDataAsMail(FormData $formData, string $template);
 }
