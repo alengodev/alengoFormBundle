@@ -148,4 +148,17 @@ class FormData
     {
         return $this->entity->getCategory();
     }
+
+    /**
+     * @VirtualProperty
+     * @SerializedName("copy")
+     * @Groups({"fullFormData"})
+     */
+    public function getCopy(): ?int
+    {
+        if ($this->entity->isCopy()) {
+            return 1;
+        }
+        return 0;
+    }
 }

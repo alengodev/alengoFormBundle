@@ -28,7 +28,7 @@ class SaveFormService implements SaveFormInterface
      */
     public function saveFormDataFromRequest(array $data, string $webspace, string $location, string $category,string $receiverMail = NULL, bool $copy = false): FormData
     {
-        $formData = $this->factory->generateFormDataByData($data, $webspace, $location, $category,$receiverMail ?? $this->defaultReceiverMail);
+        $formData = $this->factory->generateFormDataByData($data, $webspace, $location, $category,$receiverMail ?? $this->defaultReceiverMail,$copy);
         $this->repository->save($formData);
         return $formData;
     }

@@ -6,5 +6,8 @@
   "sulu_admin.receiver.mail": "Receiver E-mail",
   "sulu_admin.user.mail": "User E-Mail",
   "sulu_admin.counted.comments": "Counted comments",
-  "sulu_admin.category": "Category"
+  "sulu_admin.category": "Category",
+  "sulu_admin.copy.send.succes": "Copy send",
+  "sulu_admin.copy.send": "Copy send",
+  "sulu_admin.copy.send.notsucces": "Copy not send"
 }

@@ -7,16 +7,38 @@
 
     <properties>
 
-        <property name="receiverMail" type="text_line" mandatory="true" disabledCondition="true" colspan="6">
+        <property name="receiverMail" type="text_line" mandatory="true" disabledCondition="true" colspan="5">
             <meta>
                 <title>sulu_admin.receiver.mail</title>
             </meta>
         </property>
-        <property name="userMail" type="text_line" mandatory="true" disabledCondition="true" colspan="6">
+        <property name="userMail" type="text_line" mandatory="true" disabledCondition="true" colspan="5">
             <meta>
                 <title>sulu_admin.user.mail</title>
             </meta>
         </property>
+
+        <property name="copy" type="single_select" colspan="2" disabledCondition="true">
+            <meta>
+                <title>sulu_admin.copy.send</title>
+            </meta>
+            <params>
+                <param name="values" type="collection">
+                    <param name="1">
+                        <meta>
+                            <title>sulu_admin.copy.send.succes</title>
+                        </meta>
+                    </param>
+
+                    <param name="0">
+                        <meta>
+                            <title>sulu_admin.copy.send.notsucces</title>
+                        </meta>
+                    </param>
+                </param>
+            </params>
+        </property>
+
         <property name="locale" type="text_line" mandatory="true" disabledCondition="true" colspan="5">
             <meta>
                 <title>sulu_admin.locale</title>

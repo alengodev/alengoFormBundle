@@ -30,6 +30,11 @@ class FormData
     private $webspaceKey;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $copy = false;
+
+    /**
      * @ORM\Column(type="json")
      */
     private $data;
@@ -235,6 +240,22 @@ class FormData
     public function setCategory($category): void
     {
         $this->category = $category;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCopy(): bool
+    {
+        return $this->copy;
+    }
+
+    /**
+     * @param bool $copy
+     */
+    public function setCopy(bool $copy): void
+    {
+        $this->copy = $copy;
     }
 
 }
