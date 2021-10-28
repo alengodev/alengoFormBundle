@@ -16,8 +16,8 @@
 ## Requirements
 
 * PHP 8.0
-* Sulu >=2.3.*
 * Symfony >=4.3
+* Swiftmailer
 
 ### Install the bundle
 
