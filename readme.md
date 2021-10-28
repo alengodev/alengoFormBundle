@@ -77,3 +77,28 @@ Define you default Sender Email in ENV Config.
  ```.dotenv
     DEFAULT_SENDER_MAIL=test@test.de
  ```
+
+
+
+### Use the Bundle
+
+You can use and include the following two interfaces to save the forms and send an email with them
+
+
+#### Alengo\Bundle\AlengoFormBundle\Service\SaveFormInterface
+ ```php
+   public function saveFormDataFromRequest(array $data, string $webspace, string $location, string $category, string $receiverMail = NULL, bool $copy = false): FormData;
+
+ ```
+#### Alengo\Bundle\AlengoFormBundle\Service\SendFormInterface
+ ```php
+    public function sendFormDataAsMail(FormData $formData, string $template, string $title);
+ ```
+
+### Example
+
+Simple example which sends a copy to the person who filled in the form and his deposited mail
+ ```php
+$formData = $this->saveForm->saveFormDataFromRequest($request->request->all(),$request->get('_sulu')->getAttribute('webspace')->getKey(),$request->getLocale(),'contact',NULL,true);
+$this->sendForm->sendFormDataAsMail($formData,'hello/email.txt.twig','Welcome Mail');
+ ```
