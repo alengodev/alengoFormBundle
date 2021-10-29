@@ -18,10 +18,11 @@ class SendFormService implements SendFormInterface
         $this->twig = $twig;
     }
 
-    public function sendFormDataAsMail(FormData $formData, string $template, string $title)
+    public function sendFormDataAsMail(FormData $formData, string $template, string $title, string $receiverMail)
     {
         $message = (new \Swift_Message($title))
             ->setFrom($formData->getReceiverMail())
+            ->setTo($receiverMail)
             ->setBody(
                 $this->twig->render(
                     $template,
@@ -30,12 +31,21 @@ class SendFormService implements SendFormInterface
                 'text/html'
             );
 
-        if (!$formData->isCopy()) {
-            $message->setTo($formData->getReceiverMail());
-        } else {
-            $message->setTo([$formData->getReceiverMail(), $formData->getUserMail()]);
-        }
+        $this->mailer->send($message);
+    }
 
+    public function sendFormDataAsXmlMail(FormData $formData, string $template, string $title, string $receiverMail): void
+    {
+        $message = (new \Swift_Message($title))
+            ->setFrom($formData->getReceiverMail())
+            ->setTo($receiverMail)
+            ->setBody(
+                $this->twig->render(
+                    $template,
+                    $formData->getData()
+                ),
+                'text/plain'
+            );
 
         $this->mailer->send($message);
     }
