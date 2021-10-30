@@ -20,4 +20,4 @@ services:
   Alengo\Bundle\AlengoFormBundle\Service\SendFormService:
     public: 'true'
     arguments:
-      [ '@swiftmailer.mailer.default', '@twig' ]
+      [ '@swiftmailer.mailer.default', '@twig','%env(resolve:DEFAULT_SENDER_NAME)%'  ]

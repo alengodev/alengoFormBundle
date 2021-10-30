@@ -59,6 +59,7 @@ app_form_data_api:
 Define you default Sender Email in ENV Config.
  ```.dotenv
     DEFAULT_SENDER_MAIL=test@test.de
+    DEFAULT_SENDER_NAME=Mustermann
  ```
 
 
