@@ -21,7 +21,7 @@ class SendFormService implements SendFormInterface
         $this->defaultSenderName = $defaultSenderName;
     }
 
-    public function sendFormDataAsMail(FormData $formData, string $template, string $title, string $receiverMail, string $senderMail, bool $asXml = false)
+    public function sendFormDataAsMail(FormData $formData, string $template, string $title, string $receiverMail, string $senderMail, $xmlTemplate = false)
     {
         $message = (new \Swift_Message($title))
             ->setFrom($senderMail, $this->defaultSenderName)
@@ -31,8 +31,16 @@ class SendFormService implements SendFormInterface
                     $template,
                     $formData->getData()
                 ),
-                ($asXml) ? 'text/plain' : 'text/html'
+                'text/html'
             );
+
+        if ($xmlTemplate) {
+            $message->addPart($this->twig->render(
+                $xmlTemplate,
+                $formData->getData()
+            ),
+                'text/plain');
+        }
 
         $this->mailer->send($message);
     }
