@@ -4,10 +4,7 @@
     </a>
     <a href="https://github.com/sulu/sulu/releases" target="_blank">
         <img src="https://img.shields.io/github/v/tag/alengodev/alengoFormBundle?style=flat-square" alt="GitHub tag (latest SemVer)">
-    </a>
-    <a href="https://github.com/TheCadien/SuluNewsBundle/actions" target="_blank">
-        <img src="https://img.shields.io/github/workflow/status/alengodev/alengoFormBundle/PHP?style=flat-square" alt="workflows">
-    </a>    
+    </a> 
     <a href="https://github.com/sulu/sulu/releases" target="_blank">
         <img src="https://img.shields.io/badge/sulu%20compatibility-%3E=2.3-52b6ca.svg" alt="Sulu compatibility">
     </a>    
