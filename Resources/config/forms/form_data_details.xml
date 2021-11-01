@@ -49,9 +49,9 @@
                 <title>sulu_admin.webspace</title>
             </meta>
         </property>
-        <property name="countedComments" type="text_line" mandatory="true" disabledCondition="true" colspan="2">
+        <property name="category" type="text_line" mandatory="true" disabledCondition="true" colspan="2">
             <meta>
-                <title>sulu_admin.counted.comments</title>
+                <title>sulu_admin.category</title>
             </meta>
         </property>
         <property name="changed" type="datetime" mandatory="true" disabledCondition="true" colspan="5">
@@ -64,10 +64,9 @@
                 <title>sulu_admin.created</title>
             </meta>
         </property>
-
-        <property name="category" type="text_line" mandatory="true" disabledCondition="true" colspan="2">
+        <property name="countedComments" type="text_line" mandatory="true" disabledCondition="true" colspan="2">
             <meta>
-                <title>sulu_admin.category</title>
+                <title>sulu_admin.counted.comments</title>
             </meta>
         </property>
 
