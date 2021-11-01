@@ -18,7 +18,6 @@
   "require": {
     "php": "^8.0",
     "laminas/laminas-zendframework-bridge": "^1.4",
-    "sulu/content-bundle": "^0.6.1",
     "sulu/sulu": "2.3.*",
     "symfony/config": "^4.4 || ^5.0",
     "symfony/dependency-injection": "^4.4 || ^5.0",
@@ -30,7 +29,6 @@
     "symfony/serializer": "^5.3"
   },
   "require-dev": {
-    "coduo/php-matcher": "^5.0 || ^6.0",
     "friendsofphp/php-cs-fixer": "3.1.0",
     "handcraftedinthealps/code-coverage-checker": "^0.2.1",
     "handcraftedinthealps/zendsearch": "^2.0",
