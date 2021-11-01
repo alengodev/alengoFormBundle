@@ -11,6 +11,7 @@ class FormData
 {
 
     const RESOURCE_KEY = 'formData';
+    const SECURITY_CONTEXT = 'sulu.form.datas';
 
     /**
      * @ORM\Id

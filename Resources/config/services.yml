@@ -16,7 +16,7 @@ services:
   Alengo\Bundle\AlengoFormBundle\Admin\FormDataAdmin:
     tags: [ 'sulu.admin', { name: 'sulu.context', context: 'admin' } ]
     arguments:
-      [ '@sulu_admin.view_builder_factory' ]
+      [ '@sulu_admin.view_builder_factory', '@sulu_security.security_checker' ]
   Alengo\Bundle\AlengoFormBundle\Controller\Admin\FormDataController:
     tags: [ 'controller.service_arguments', { name: 'sulu.context', context: 'admin' } ]
     arguments:

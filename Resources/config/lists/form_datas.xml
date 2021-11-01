@@ -8,7 +8,7 @@
             <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
         </property>
 
-        <property name="receiverMail" visibility="always" searchability="yes" translation="sulu_admin.receiver.mail">
+        <property name="receiverMail" visibility="yes" searchability="yes" translation="sulu_admin.receiver.mail">
             <field-name>receiverMail</field-name>
             <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
         </property>
@@ -18,7 +18,7 @@
             <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
         </property>
 
-        <property name="category" visibility="always" searchability="yes" translation="sulu_admin.category">
+        <property name="category" visibility="yes" searchability="yes" translation="sulu_admin.category">
             <field-name>category</field-name>
             <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
         </property>
@@ -28,17 +28,15 @@
             <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
         </property>
 
-        <property name="webspaceKey" visibility="always" searchability="yes" translation="sulu_admin.webspace">
+        <property name="webspaceKey" visibility="yes" searchability="yes" translation="sulu_admin.webspace">
             <field-name>webspaceKey</field-name>
             <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
         </property>
 
-
-        <property name="countedComments" visibility="always" searchability="yes" translation="sulu_admin.counted.comments">
+        <property name="countedComments" visibility="yes" searchability="yes" translation="sulu_admin.counted.comments">
             <field-name>countedComments</field-name>
             <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
         </property>
-
 
         <property name="created" type="datetime" visibility="yes" searchability="yes" translation="sulu_admin.created">
             <field-name>created</field-name>
