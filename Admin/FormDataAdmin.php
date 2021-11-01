@@ -42,6 +42,7 @@ class FormDataAdmin extends Admin
         $listView = $this->viewBuilderFactory->createListViewBuilder(static::FORM_DATA_LIST_VIEW, '/form_datas')
             ->setResourceKey(FormData::RESOURCE_KEY)
             ->setListKey('form_datas')
+            ->setTitle('app.form_datas')
             ->addListAdapters(['table'])
             ->setAddView(static::FORM_DATA_ADD_FORM_VIEW)
             ->setEditView(static::FORM_DATA_EDIT_FORM_VIEW)
