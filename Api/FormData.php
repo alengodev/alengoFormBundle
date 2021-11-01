@@ -106,13 +106,14 @@ class FormData
             return $data;
         }
         foreach ($this->entity->getData() as $key => $dataElement) {
-            $data[] = [
+            $data[$key] = [
                 'type' => 'field',
                 'data' => $dataElement,
                 'label' => $key
             ];
         }
-        return $data;
+        ksort($data);
+        return array_values($data);
     }
 
     /**
