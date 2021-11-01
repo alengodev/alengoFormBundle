@@ -76,7 +76,7 @@ You can use and include the following two interfaces to save the forms and send 
  ```
 #### Alengo\Bundle\AlengoFormBundle\Service\SendFormInterface
  ```php
-    public function sendFormDataAsMail(FormData $formData, string $template, string $title, string $receiverMail,string $senderMail, bool $asXml = false);
+    public function sendFormDataAsMail(FormData $formData, string $template, string $title, string $receiverMail,string $senderMail,$xmlTemplate = false);
  ```
 
 ### Example
