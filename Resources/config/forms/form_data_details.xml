@@ -129,10 +129,10 @@
                                 <title lang="en">Label</title>
                             </meta>
                         </property>
-                        <property name="data" type="text_line" disabledCondition="true">
+                        <property name="data" type="text_area" disabledCondition="true">
                             <meta>
                                 <title lang="de">Feld</title>
-                                <title lang="en">Feld</title>
+                                <title lang="en">Field</title>
                             </meta>
                         </property>
                     </properties>
