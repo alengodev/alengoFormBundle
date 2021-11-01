@@ -1,8 +1,14 @@
 services:
-  Alengo\Bundle\AlengoFormBundle\Service\SaveFormService:
+  alengo_form.save_form:
+    class: 'Alengo\Bundle\AlengoFormBundle\Service\SaveFormService'
     public: 'true'
     arguments:
       [ '@Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository','@Alengo\Bundle\AlengoFormBundle\Entity\Factory\FormDataFactory','%env(resolve:DEFAULT_SENDER_MAIL)%' ]
+  alengo_form.send_form:
+    class: 'Alengo\Bundle\AlengoFormBundle\Service\SendFormService'
+    public: 'true'
+    arguments:
+      [ '@swiftmailer.mailer.default', '@twig','%env(resolve:DEFAULT_SENDER_NAME)%' ]
   Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository:
     public: 'true'
     arguments:
@@ -14,10 +20,12 @@ services:
   Alengo\Bundle\AlengoFormBundle\Controller\Admin\FormDataController:
     tags: [ 'controller.service_arguments', { name: 'sulu.context', context: 'admin' } ]
     arguments:
-      [ '@fos_rest.view_handler.default', '@security.token_storage', '@sulu_core.list_builder.field_descriptor_factory', '@sulu_core.doctrine_list_builder_factory', '@sulu_core.doctrine_rest_helper', '@Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository', '@Alengo\Bundle\AlengoFormBundle\Service\SaveFormService' ]
+      [ '@fos_rest.view_handler.default', '@security.token_storage', '@sulu_core.list_builder.field_descriptor_factory', '@sulu_core.doctrine_list_builder_factory', '@sulu_core.doctrine_rest_helper', '@Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository', '@alengo_form.save_form' ]
   Alengo\Bundle\AlengoFormBundle\Entity\Factory\FormDataFactory:
     public: 'true'
-  Alengo\Bundle\AlengoFormBundle\Service\SendFormService:
+  Alengo\Bundle\AlengoFormBundle\Service\SaveFormInterface:
     public: 'true'
-    arguments:
-      [ '@swiftmailer.mailer.default', '@twig','%env(resolve:DEFAULT_SENDER_NAME)%'  ]
+    alias: 'alengo_form.save_form'
+  Alengo\Bundle\AlengoFormBundle\Service\SendFormInterface:
+    public: 'true'
+    alias: 'alengo_form.send_form'
