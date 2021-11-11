@@ -36,7 +36,7 @@ class FormDataAdmin extends Admin
         
             $formDataNavigationItem = new NavigationItem('app.form_datas');
             $formDataNavigationItem->setView(static::FORM_DATA_LIST_VIEW);
-            $formDataNavigationItem->setIcon('su-snippet');
+            $formDataNavigationItem->setIcon('fa-file-text-o');
             $formDataNavigationItem->setPosition(30);
 
             $navigationItemCollection->add($formDataNavigationItem);
