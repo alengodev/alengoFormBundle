@@ -8,7 +8,7 @@ services:
     class: 'Alengo\Bundle\AlengoFormBundle\Service\SendFormService'
     public: 'true'
     arguments:
-      [ '@swiftmailer.mailer.default', '@twig','%env(resolve:DEFAULT_SENDER_NAME)%' ]
+      [ '@Symfony\Component\Mailer\MailerInterface','%env(resolve:DEFAULT_SENDER_NAME)%','%env(resolve:DEFAULT_SENDER_MAIL)%' ]
   Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository:
     public: 'true'
     arguments:

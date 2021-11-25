@@ -3,45 +3,50 @@
 namespace Alengo\Bundle\AlengoFormBundle\Service;
 
 use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
-use Swift_Mailer;
-use Twig\Environment;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 
 class SendFormService implements SendFormInterface
 {
-
-    private Environment $twig;
+    private MailerInterface $mailer;
     private string $defaultSenderName;
-    private Swift_Mailer $mailer;
+    private string $defaultSenderMail;
 
-    public function __construct(Swift_Mailer $mailer, Environment $twig, string $defaultSenderName = NULL)
+    public function __construct(MailerInterface $mailer, string $defaultSenderName = NULL, string $defaultSenderMail = NULL)
     {
         $this->mailer = $mailer;
-        $this->twig = $twig;
         $this->defaultSenderName = $defaultSenderName;
+        $this->defaultSenderMail = $defaultSenderMail;
     }
 
-    public function sendFormDataAsMail(FormData $formData, string $template, string $title, string $receiverMail, string $senderMail, $xmlTemplate = false)
+    public function sendFormDataAsMail(FormData $formData, string $template, string $title, string $receiverMail, $xmlTemplate = false, $files = false)
     {
-        $message = (new \Swift_Message($title))
-            ->setFrom($senderMail, $this->defaultSenderName)
-            ->setTo($receiverMail)
-            ->setBody(
-                $this->twig->render(
-                    $template,
-                    $formData->getData()
-                ),
-                'text/html'
-            );
+        $message = (new TemplatedEmail())
+            ->from(new Address($this->defaultSenderMail, $this->defaultSenderName))
+            ->to(new Address($receiverMail))
+            ->subject($title)
+            ->htmlTemplate($template)
+            ->textTemplate($xmlTemplate)
+            ->context([
+                'formData' => $formData,
+                'data' => $formData->getData()
+            ]);
 
-        if ($xmlTemplate) {
-            $message->addPart($this->twig->render(
-                $xmlTemplate,
-                $formData->getData()
-            ),
-                'text/plain');
+        if(isset($files) && is_array($files)){
+            foreach ($files as $attachment) {
+                $message->attachFromPath($attachment);
+            }
         }
 
-        $this->mailer->send($message);
+        try {
+            $this->mailer->send($message);
+            return true;
+        } catch (TransportExceptionInterface $e) {
+            return $e->getMessage();
+        }
     }
 }
