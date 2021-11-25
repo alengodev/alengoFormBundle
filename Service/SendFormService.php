@@ -13,23 +13,28 @@ class SendFormService implements SendFormInterface
     private Environment $twig;
     private string $defaultSenderName;
     private Swift_Mailer $mailer;
+    private string $defaultSenderMail;
 
-    public function __construct(Swift_Mailer $mailer, Environment $twig, string $defaultSenderName = NULL)
+    public function __construct(Swift_Mailer $mailer, Environment $twig, string $defaultSenderName = NULL, string $defaultSenderMail = NULL)
     {
         $this->mailer = $mailer;
         $this->twig = $twig;
         $this->defaultSenderName = $defaultSenderName;
+        $this->defaultSenderMail = $defaultSenderMail;
     }
 
     public function sendFormDataAsMail(FormData $formData, string $template, string $title, string $receiverMail, string $senderMail, $xmlTemplate = false)
     {
         $message = (new \Swift_Message($title))
-            ->setFrom($senderMail, $this->defaultSenderName)
+            ->setFrom($this->defaultSenderMail, $this->defaultSenderName)
             ->setTo($receiverMail)
             ->setBody(
                 $this->twig->render(
                     $template,
-                    $formData->getData()
+                    [
+                        'formData' => $formData,
+                        'data' => $formData->getData()
+                    ]
                 ),
                 'text/html'
             );
@@ -37,7 +42,10 @@ class SendFormService implements SendFormInterface
         if ($xmlTemplate) {
             $message->addPart($this->twig->render(
                 $xmlTemplate,
-                $formData->getData()
+                [
+                    'formData' => $formData,
+                    'data' => $formData->getData()
+                ]
             ),
                 'text/plain');
         }
