@@ -23,7 +23,7 @@ class SendFormService implements SendFormInterface
         $this->defaultSenderMail = $defaultSenderMail;
     }
 
-    public function sendFormDataAsMail(FormData $formData, string $template, string $title, string $receiverMail, string $senderMail, $xmlTemplate = false)
+    public function sendFormDataAsMail(FormData $formData, string $template, string $title, string $receiverMail, $xmlTemplate = false)
     {
         $message = (new \Swift_Message($title))
             ->setFrom($this->defaultSenderMail, $this->defaultSenderName)
