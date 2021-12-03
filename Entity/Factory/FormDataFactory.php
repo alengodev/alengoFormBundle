@@ -32,7 +32,9 @@ class FormDataFactory
         if ($this->getProperty($data, 'comments')) {
             $formData->setComments($this->getProperty($data, 'comments'));
             $formData->setCountedComments(count($this->getProperty($data, 'comments')));
-
+        } else {
+            $formData->setComments([]);
+            $formData->setCountedComments(0);
         }
 
         return $formData;
