@@ -23,7 +23,7 @@ class SendFormService implements SendFormInterface
         $this->defaultSenderMail = $defaultSenderMail;
     }
 
-    public function sendFormDataAsMail(FormData $formData, string $template, string $title, string $receiverMail, $xmlTemplate = false, $files = false)
+    public function sendFormDataAsMail(FormData $formData, string $template, string $title, string $receiverMail, $xmlTemplate = false, $files = false, $additionalData = false)
     {
         $message = (new TemplatedEmail())
             ->from(new Address($this->defaultSenderMail, $this->defaultSenderName))
@@ -33,7 +33,8 @@ class SendFormService implements SendFormInterface
             ->textTemplate($xmlTemplate)
             ->context([
                 'formData' => $formData,
-                'data' => $formData->getData()
+                'data' => $formData->getData(),
+                'additionalData' => $additionalData
             ]);
 
         if(isset($files) && is_array($files)){
