@@ -28,6 +28,7 @@ class SendFormService implements SendFormInterface
         $message = (new TemplatedEmail())
             ->from(new Address($this->defaultSenderMail, $this->defaultSenderName))
             ->to(new Address($receiverMail))
+            ->replyTo(isset($formData->getData()['email']) ? $formData->getData()['email'] : $this->defaultSenderMail)
             ->subject($title)
             ->htmlTemplate($template)
             ->textTemplate($xmlTemplate)
