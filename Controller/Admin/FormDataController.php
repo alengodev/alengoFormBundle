@@ -89,7 +89,7 @@ class FormDataController extends AbstractRestController
             $listBuilder->execute(),
             FormData::RESOURCE_KEY,
             $listBuilder->getCurrentPage(),
-            $listBuilder->getLimit(),
+            $listBuilder->getLimit() ?? 0,
             $listBuilder->count()
         );
 
