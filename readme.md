@@ -13,8 +13,8 @@
 ## Requirements
 
 * PHP 8.0
-* Symfony >=4.3
-* Swiftmailer
+* Symfony >=6.0
+* Symfonymailer
 
 ### Install the bundle
 
@@ -81,5 +81,5 @@ You can use and include the following two interfaces to save the forms and send 
 Simple example which sends a copy to the person who filled in the form and his deposited mail
  ```php
 $formData = $this->saveForm->saveFormDataFromRequest($request->request->all(),$request->get('_sulu')->getAttribute('webspace')->getKey(),$request->getLocale(),'contact',NULL,true);
-$this->sendForm->sendFormDataAsMail($formData,'hello/email.txt.twig','Welcome Mail');
+$this->sendForm->sendFormDataAsMail($formData,'hello/email.txt.twig','Welcome Mail','receiver@mail.de');
  ```
