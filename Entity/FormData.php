@@ -2,77 +2,52 @@
 
 namespace Alengo\Bundle\AlengoFormBundle\Entity;
 
+use Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository")
- */
+#[ORM\Entity(repositoryClass: FormDataRepository::class)]
 class FormData
 {
 
     const RESOURCE_KEY = 'formData';
     const SECURITY_CONTEXT = 'sulu.form.datas';
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Id, ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: Types::STRING,length: 255)]
     private $locale;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: Types::STRING,length: 255)]
     private $webspaceKey;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private $copy = false;
 
-    /**
-     * @ORM\Column(type="json")
-     */
+    #[ORM\Column(type: Types::JSON)]
     private $data;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING,length: 255,nullable: true)]
     private $receiverMail;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING,length: 255,nullable: true)]
     private $userMail;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING,length: 255,nullable: true)]
     private $category;
 
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     */
+    #[ORM\Column(type: Types::JSON,nullable: true)]
     private $comments;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE,nullable: true)]
     private $created;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE,nullable: true)]
     private $changed;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private $countedComments = 0;
 
     /**
