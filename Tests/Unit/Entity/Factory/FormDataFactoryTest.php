@@ -10,7 +10,7 @@ class FormDataFactoryTest extends TestCase
     public function testFactory()
     {
         $factory = new FormDataFactory();
-        $data = $factory->generateFormDataByData(['username' => 'Oliver', 'email' => 'userMail@test.de'], 'alengo', 'de', 'test@test.de');
+        $data = $factory->generateFormDataByData(['username' => 'Oliver', 'email' => 'userMail@test.de'], 'alengo', 'de','test category', 'test@test.de');
         self::assertSame($data->getData(), ['username' => 'Oliver', 'email' => 'userMail@test.de']);
         self::assertSame($data->getLocale(), 'de');
         self::assertSame($data->getWebspaceKey(), 'alengo');
