@@ -18,7 +18,7 @@
   "require": {
     "php": "^8.0",
     "laminas/laminas-zendframework-bridge": "^1.4",
-    "sulu/sulu": "2.5.0-alpha1",
+    "sulu/sulu": "^2.5",
     "symfony/config": "^6.0",
     "symfony/dependency-injection": "^6.0",
     "symfony/framework-bundle": "^6.0",
