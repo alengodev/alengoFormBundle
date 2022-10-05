@@ -22,4 +22,15 @@ class FormDataApiDtoTest extends TestCase
         self::assertSame($apiDto->getWebspace(), 'alengo');
     }
 
+    public function testApiDtoWithArray()
+    {
+        $apiDto = new FormData($this->generateFormDataWithArray(), 'en');
+
+        self::assertSame($apiDto->getData(), [['type' => 'field','data' => '{"1":"test"}', 'label' => 'arrayData'],['type' => 'field','data' => 'Oliver', 'label' => 'firstname']]);
+        self::assertSame($apiDto->getUserMail(), 'usertest@test.de');
+        self::assertSame($apiDto->getReceiverMail(), 'receivertest@test.de');
+        self::assertSame($apiDto->getLocale(), 'de');
+        self::assertSame($apiDto->getWebspace(), 'alengo');
+    }
+
 }

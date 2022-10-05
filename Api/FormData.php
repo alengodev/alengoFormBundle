@@ -7,6 +7,7 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\VirtualProperty;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 
 /**
@@ -98,6 +99,7 @@ class FormData
      * @VirtualProperty
      * @SerializedName("data")
      * @Groups({"fullFormData"})
+     * @throws \JsonException
      */
     public function getData(): array
     {
@@ -108,12 +110,18 @@ class FormData
         foreach ($this->entity->getData() as $key => $dataElement) {
             $data[$key] = [
                 'type' => 'field',
-                'data' => $dataElement,
+                'data' => is_array($dataElement) ? $this->getDataAsJsonElement($dataElement) : $dataElement,
                 'label' => $key
             ];
         }
         ksort($data);
         return array_values($data);
+    }
+
+    private function getDataAsJsonElement(array $dataElement): string
+    {
+        $encoder = new JsonEncoder();
+        return $encoder->encode($dataElement, 'json');
     }
 
     /**
