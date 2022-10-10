@@ -11,6 +11,7 @@ use Sulu\Bundle\AdminBundle\Admin\View\ViewBuilderFactoryInterface;
 use Sulu\Bundle\AdminBundle\Admin\View\ViewCollection;
 use Sulu\Component\Security\Authorization\PermissionTypes;
 use Sulu\Component\Security\Authorization\SecurityCheckerInterface;
+use Sulu\Component\Webspace\Manager\WebspaceManagerInterface;
 
 class FormDataAdmin extends Admin
 {
@@ -21,13 +22,16 @@ class FormDataAdmin extends Admin
 
     private ViewBuilderFactoryInterface $viewBuilderFactory;
     private SecurityCheckerInterface $securityChecker;
+    private WebspaceManagerInterface $webspaceManager;
 
     public function __construct(
         ViewBuilderFactoryInterface $viewBuilderFactory,
-        SecurityCheckerInterface $securityChecker
+        SecurityCheckerInterface $securityChecker,
+        WebspaceManagerInterface $webspaceManager,
     ) {
         $this->viewBuilderFactory = $viewBuilderFactory;
         $this->securityChecker = $securityChecker;
+        $this->webspaceManager = $webspaceManager;
     }
 
     public function configureNavigationItems(NavigationItemCollection $navigationItemCollection): void
@@ -46,6 +50,8 @@ class FormDataAdmin extends Admin
 
     public function configureViews(ViewCollection $viewCollection): void
     {
+        $locales = $this->webspaceManager->getAllLocales();
+
         $formToolbarActions = [];
         $listToolbarActions = [];
 
@@ -65,11 +71,12 @@ class FormDataAdmin extends Admin
         if ($this->securityChecker->hasPermission(FormData::SECURITY_CONTEXT, PermissionTypes::VIEW)) {
 
             $listView = $this->viewBuilderFactory
-                ->createListViewBuilder(static::FORM_DATA_LIST_VIEW, '/form_datas')
+                ->createListViewBuilder(static::FORM_DATA_LIST_VIEW, '/form_datas/:locale')
                 ->setResourceKey(FormData::RESOURCE_KEY)
                 ->setListKey('form_datas')
                 ->setTitle('app.form_datas')
                 ->addListAdapters(['table'])
+                ->addLocales($locales)
                 ->setAddView(static::FORM_DATA_ADD_FORM_VIEW)
                 ->setEditView(static::FORM_DATA_EDIT_FORM_VIEW)
                 ->addToolbarActions($listToolbarActions);
@@ -77,14 +84,16 @@ class FormDataAdmin extends Admin
             $viewCollection->add($listView);
 
             $editFormView = $this->viewBuilderFactory
-                ->createResourceTabViewBuilder(static::FORM_DATA_EDIT_FORM_VIEW, '/form_datas/:id')
+                ->createResourceTabViewBuilder(static::FORM_DATA_EDIT_FORM_VIEW, '/form_datas/:locale/:id')
                 ->setResourceKey(FormData::RESOURCE_KEY)
+                ->addLocales($locales)
                 ->setBackView(static::FORM_DATA_LIST_VIEW);
 
             $viewCollection->add($editFormView);
 
             $editDetailsFormView = $this->viewBuilderFactory
-                ->createFormViewBuilder(static::FORM_DATA_EDIT_FORM_VIEW . '.details', '/details')
+                ->createPreviewFormViewBuilder(static::FORM_DATA_EDIT_FORM_VIEW . '.details', '/details')
+                ->setPreviewCondition('id != null')
                 ->setResourceKey(FormData::RESOURCE_KEY)
                 ->setFormKey(static::FORM_DATA_FORM_KEY)
                 ->setTabTitle('sulu_admin.details')

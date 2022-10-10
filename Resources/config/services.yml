@@ -16,11 +16,7 @@ services:
   Alengo\Bundle\AlengoFormBundle\Admin\FormDataAdmin:
     tags: [ 'sulu.admin', { name: 'sulu.context', context: 'admin' } ]
     arguments:
-      [ '@sulu_admin.view_builder_factory', '@sulu_security.security_checker' ]
-  Alengo\Bundle\AlengoFormBundle\Controller\Admin\FormDataController:
-    tags: [ 'controller.service_arguments', { name: 'sulu.context', context: 'admin' } ]
-    arguments:
-      [ '@fos_rest.view_handler.default', '@security.token_storage', '@sulu_core.list_builder.field_descriptor_factory', '@sulu_core.doctrine_list_builder_factory', '@sulu_core.doctrine_rest_helper', '@Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository', '@alengo_form.save_form' ]
+      [ '@sulu_admin.view_builder_factory', '@sulu_security.security_checker', '@sulu_core.webspace.webspace_manager' ]
   Alengo\Bundle\AlengoFormBundle\Entity\Factory\FormDataFactory:
     public: 'true'
   Alengo\Bundle\AlengoFormBundle\Service\SaveFormInterface:
@@ -29,3 +25,25 @@ services:
   Alengo\Bundle\AlengoFormBundle\Service\SendFormInterface:
     public: 'true'
     alias: 'alengo_form.send_form'
+  alengo_form_preview_object_provider:
+    class: Alengo\Bundle\AlengoFormBundle\Preview\FormDataObjectProvider
+    public: 'true'
+    tags:
+      - { name: "sulu_preview.object_provider", provider-key: 'formData' }
+    arguments:
+      [ '@Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository' ]
+  alengo_form_route_default_provider:
+    class: Alengo\Bundle\AlengoFormBundle\Routing\FormDataRouteDefaultsProvider
+    public: 'true'
+    tags:
+      - { name: "sulu_route.defaults_provider" }
+    arguments:
+      [ '@Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository' ]
+  Alengo\Bundle\AlengoFormBundle\Controller\Admin\FormDataController:
+    tags: [ 'controller.service_arguments', { name: 'sulu.context', context: 'admin' } ]
+    arguments:
+      [ '@fos_rest.view_handler.default', '@security.token_storage', '@sulu_core.list_builder.field_descriptor_factory', '@sulu_core.doctrine_list_builder_factory', '@sulu_core.doctrine_rest_helper', '@Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository', '@alengo_form.save_form' ]
+  alengo_form.controller.website:
+    class: 'Alengo\Bundle\AlengoFormBundle\Controller\FormDataController'
+    public: 'true'
+    tags: ['controller.service_arguments', {name: 'sulu.context', context: 'website'}]
