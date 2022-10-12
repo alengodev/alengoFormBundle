@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of Alengo\Bundle\AlengoFormBundle.
+ *
+ * (c) Alengo
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Alengo\Bundle\AlengoFormBundle\Admin;
 
 use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
@@ -15,10 +26,10 @@ use Sulu\Component\Webspace\Manager\WebspaceManagerInterface;
 
 class FormDataAdmin extends Admin
 {
-    const FORM_DATA_LIST_VIEW = 'app.form_datas_list';
-    const FORM_DATA_FORM_KEY = 'form_data_details';
-    const FORM_DATA_ADD_FORM_VIEW = 'app.form_data_add_form';
-    const FORM_DATA_EDIT_FORM_VIEW = 'app.form_data_edit_form';
+    public const FORM_DATA_LIST_VIEW = 'app.form_datas_list';
+    public const FORM_DATA_FORM_KEY = 'form_data_details';
+    public const FORM_DATA_ADD_FORM_VIEW = 'app.form_data_add_form';
+    public const FORM_DATA_EDIT_FORM_VIEW = 'app.form_data_edit_form';
 
     private ViewBuilderFactoryInterface $viewBuilderFactory;
     private SecurityCheckerInterface $securityChecker;
@@ -37,14 +48,12 @@ class FormDataAdmin extends Admin
     public function configureNavigationItems(NavigationItemCollection $navigationItemCollection): void
     {
         if ($this->securityChecker->hasPermission(FormData::SECURITY_CONTEXT, PermissionTypes::VIEW)) {
-        
             $formDataNavigationItem = new NavigationItem('app.form_datas');
             $formDataNavigationItem->setView(static::FORM_DATA_LIST_VIEW);
             $formDataNavigationItem->setIcon('fa-file-text-o');
             $formDataNavigationItem->setPosition(30);
 
             $navigationItemCollection->add($formDataNavigationItem);
-
         }
     }
 
@@ -67,9 +76,8 @@ class FormDataAdmin extends Admin
         if ($this->securityChecker->hasPermission(FormData::SECURITY_CONTEXT, PermissionTypes::VIEW)) {
             $listToolbarActions[] = new ToolbarAction('sulu_admin.export');
         }
-        
-        if ($this->securityChecker->hasPermission(FormData::SECURITY_CONTEXT, PermissionTypes::VIEW)) {
 
+        if ($this->securityChecker->hasPermission(FormData::SECURITY_CONTEXT, PermissionTypes::VIEW)) {
             $listView = $this->viewBuilderFactory
                 ->createListViewBuilder(static::FORM_DATA_LIST_VIEW, '/form_datas/:locale')
                 ->setResourceKey(FormData::RESOURCE_KEY)
@@ -79,7 +87,8 @@ class FormDataAdmin extends Admin
                 ->addLocales($locales)
                 ->setAddView(static::FORM_DATA_ADD_FORM_VIEW)
                 ->setEditView(static::FORM_DATA_EDIT_FORM_VIEW)
-                ->addToolbarActions($listToolbarActions);
+                ->addToolbarActions($listToolbarActions)
+            ;
 
             $viewCollection->add($listView);
 
@@ -87,21 +96,22 @@ class FormDataAdmin extends Admin
                 ->createResourceTabViewBuilder(static::FORM_DATA_EDIT_FORM_VIEW, '/form_datas/:locale/:id')
                 ->setResourceKey(FormData::RESOURCE_KEY)
                 ->addLocales($locales)
-                ->setBackView(static::FORM_DATA_LIST_VIEW);
+                ->setBackView(static::FORM_DATA_LIST_VIEW)
+            ;
 
             $viewCollection->add($editFormView);
 
             $editDetailsFormView = $this->viewBuilderFactory
-                ->createPreviewFormViewBuilder(static::FORM_DATA_EDIT_FORM_VIEW . '.details', '/details')
+                ->createPreviewFormViewBuilder(static::FORM_DATA_EDIT_FORM_VIEW.'.details', '/details')
                 ->setPreviewCondition('id != null')
                 ->setResourceKey(FormData::RESOURCE_KEY)
                 ->setFormKey(static::FORM_DATA_FORM_KEY)
                 ->setTabTitle('sulu_admin.details')
                 ->addToolbarActions($formToolbarActions)
-                ->setParent(static::FORM_DATA_EDIT_FORM_VIEW);
+                ->setParent(static::FORM_DATA_EDIT_FORM_VIEW)
+            ;
 
             $viewCollection->add($editDetailsFormView);
-
         }
     }
 

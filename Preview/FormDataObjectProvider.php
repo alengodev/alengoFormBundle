@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of Alengo\Bundle\AlengoFormBundle.
+ *
+ * (c) Alengo
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Alengo\Bundle\AlengoFormBundle\Preview;
 
 use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
@@ -8,7 +19,6 @@ use Sulu\Bundle\PreviewBundle\Preview\Object\PreviewObjectProviderInterface;
 
 class FormDataObjectProvider implements PreviewObjectProviderInterface
 {
-
     /**
      * @var FormDataRepository
      */
@@ -29,14 +39,12 @@ class FormDataObjectProvider implements PreviewObjectProviderInterface
         return $object->getId();
     }
 
-    public function setValues($object, $locale, array $data)
+    public function setValues($object, $locale, array $data): void
     {
-        return;
     }
 
-    public function setContext($object, $locale, array $context)
+    public function setContext($object, $locale, array $context): void
     {
-        return;
     }
 
     public function serialize($object)

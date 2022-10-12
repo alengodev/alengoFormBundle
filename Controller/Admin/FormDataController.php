@@ -1,7 +1,17 @@
 <?php
 
-namespace Alengo\Bundle\AlengoFormBundle\Controller\Admin;
+declare(strict_types=1);
 
+/*
+ * This file is part of Alengo\Bundle\AlengoFormBundle.
+ *
+ * (c) Alengo
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
+namespace Alengo\Bundle\AlengoFormBundle\Controller\Admin;
 
 use Alengo\Bundle\AlengoFormBundle\Api\FormData as FormDataApi;
 use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
@@ -21,7 +31,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-
 
 /**
  * @RouteResource("formData")
@@ -48,27 +57,19 @@ class FormDataController extends AbstractRestController
      */
     private $restHelper;
 
-    /**
-     * @var FormDataRepository
-     */
     private FormDataRepository $repository;
 
-    /**
-     * @var SaveFormService
-     */
     private SaveFormService $formService;
 
     public function __construct(
-        ViewHandlerInterface                $viewHandler,
-        TokenStorageInterface               $tokenStorage,
-        FieldDescriptorFactoryInterface     $fieldDescriptorFactory,
+        ViewHandlerInterface $viewHandler,
+        TokenStorageInterface $tokenStorage,
+        FieldDescriptorFactoryInterface $fieldDescriptorFactory,
         DoctrineListBuilderFactoryInterface $listBuilderFactory,
-        RestHelperInterface                 $restHelper,
-        FormDataRepository                  $repository,
-        SaveFormService                     $formService
-    )
-    {
-
+        RestHelperInterface $restHelper,
+        FormDataRepository $repository,
+        SaveFormService $formService
+    ) {
         parent::__construct($viewHandler, $tokenStorage);
 
         $this->viewHandler = $viewHandler;
@@ -109,20 +110,6 @@ class FormDataController extends AbstractRestController
         return $this->handleView($view);
     }
 
-    protected function generateFormDataApiEntity(FormData $entity, string $locale): FormDataApi
-    {
-        return new FormDataApi($entity, $locale);
-    }
-
-    protected function generateViewContent(FormDataApi $entity): View
-    {
-        $view = $this->view($entity);
-        $context = new Context();
-        $context->setGroups(['fullFormData']);
-
-        return $view->setContext($context);
-    }
-
     public function putAction(int $id, Request $request): Response
     {
         $entity = $this->repository->findById($id)[0];
@@ -150,5 +137,19 @@ class FormDataController extends AbstractRestController
         }
 
         return $this->handleView($this->view());
+    }
+
+    protected function generateFormDataApiEntity(FormData $entity, string $locale): FormDataApi
+    {
+        return new FormDataApi($entity, $locale);
+    }
+
+    protected function generateViewContent(FormDataApi $entity): View
+    {
+        $view = $this->view($entity);
+        $context = new Context();
+        $context->setGroups(['fullFormData']);
+
+        return $view->setContext($context);
     }
 }

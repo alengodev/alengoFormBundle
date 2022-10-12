@@ -1,22 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of Alengo\Bundle\AlengoFormBundle.
+ *
+ * (c) Alengo
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Alengo\Bundle\AlengoFormBundle\Tests\Unit\Entity;
 
 use Alengo\Bundle\AlengoFormBundle\Tests\Unit\Traits\FormDataTrait;
 use PHPUnit\Framework\TestCase;
 
-class FormDataTest extends TestCase
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
+final class FormDataTest extends TestCase
 {
     use FormDataTrait;
 
-    public function testFactory()
+    public function testFactory(): void
     {
         $data = $this->generateFormData();
 
-        self::assertSame($data->getData(), ['firstname' => 'Oliver']);
-        self::assertSame($data->getUserMail(), 'usertest@test.de');
-        self::assertSame($data->getReceiverMail(), 'receivertest@test.de');
-        self::assertSame($data->getLocale(), 'de');
-        self::assertSame($data->getWebspaceKey(), 'alengo');
+        static::assertSame($data->getData(), ['firstname' => 'Oliver']);
+        static::assertSame($data->getUserMail(), 'usertest@test.de');
+        static::assertSame($data->getReceiverMail(), 'receivertest@test.de');
+        static::assertSame($data->getLocale(), 'de');
+        static::assertSame($data->getWebspaceKey(), 'alengo');
     }
 }

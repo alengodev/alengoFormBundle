@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of Alengo\Bundle\AlengoFormBundle.
+ *
+ * (c) Alengo
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Alengo\Bundle\AlengoFormBundle\Api;
 
 use Alengo\Bundle\AlengoFormBundle\Entity\FormData as FormDataEntity;
@@ -9,7 +20,6 @@ use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\VirtualProperty;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
-
 /**
  * The FormData class which will be exported to the API.
  *
@@ -17,7 +27,6 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
  */
 class FormData
 {
-
     public function __construct(FormDataEntity $entity, $locale)
     {
         // @var FormDataEntity entity
@@ -27,6 +36,7 @@ class FormData
 
     /**
      * @VirtualProperty
+     *
      * @SerializedName("id")
      * @Groups({"fullFormData"})
      */
@@ -37,6 +47,7 @@ class FormData
 
     /**
      * @VirtualProperty
+     *
      * @SerializedName("created")
      * @Groups({"fullFormData"})
      */
@@ -47,6 +58,7 @@ class FormData
 
     /**
      * @VirtualProperty
+     *
      * @SerializedName("changed")
      * @Groups({"fullFormData"})
      */
@@ -57,6 +69,7 @@ class FormData
 
     /**
      * @VirtualProperty
+     *
      * @SerializedName("webspace")
      * @Groups({"fullFormData"})
      */
@@ -67,6 +80,7 @@ class FormData
 
     /**
      * @VirtualProperty
+     *
      * @SerializedName("locale")
      * @Groups({"fullFormData"})
      */
@@ -77,6 +91,7 @@ class FormData
 
     /**
      * @VirtualProperty
+     *
      * @SerializedName("receiverMail")
      * @Groups({"fullFormData"})
      */
@@ -87,6 +102,7 @@ class FormData
 
     /**
      * @VirtualProperty
+     *
      * @SerializedName("userMail")
      * @Groups({"fullFormData"})
      */
@@ -97,8 +113,10 @@ class FormData
 
     /**
      * @VirtualProperty
+     *
      * @SerializedName("data")
      * @Groups({"fullFormData"})
+     *
      * @throws \JsonException
      */
     public function getData(): array
@@ -110,22 +128,18 @@ class FormData
         foreach ($this->entity->getData() as $key => $dataElement) {
             $data[$key] = [
                 'type' => 'field',
-                'data' => is_array($dataElement) ? $this->getDataAsJsonElement($dataElement) : $dataElement,
-                'label' => $key
+                'data' => \is_array($dataElement) ? $this->getDataAsJsonElement($dataElement) : $dataElement,
+                'label' => $key,
             ];
         }
         ksort($data);
-        return array_values($data);
-    }
 
-    private function getDataAsJsonElement(array $dataElement): string
-    {
-        $encoder = new JsonEncoder();
-        return $encoder->encode($dataElement, 'json');
+        return array_values($data);
     }
 
     /**
      * @VirtualProperty
+     *
      * @SerializedName("comments")
      * @Groups({"fullFormData"})
      */
@@ -140,6 +154,7 @@ class FormData
 
     /**
      * @VirtualProperty
+     *
      * @SerializedName("countedComments")
      * @Groups({"fullFormData"})
      */
@@ -150,6 +165,7 @@ class FormData
 
     /**
      * @VirtualProperty
+     *
      * @SerializedName("category")
      * @Groups({"fullFormData"})
      */
@@ -160,6 +176,7 @@ class FormData
 
     /**
      * @VirtualProperty
+     *
      * @SerializedName("copy")
      * @Groups({"fullFormData"})
      */
@@ -168,6 +185,14 @@ class FormData
         if ($this->entity->isCopy()) {
             return 1;
         }
+
         return 0;
+    }
+
+    private function getDataAsJsonElement(array $dataElement): string
+    {
+        $encoder = new JsonEncoder();
+
+        return $encoder->encode($dataElement, 'json');
     }
 }
