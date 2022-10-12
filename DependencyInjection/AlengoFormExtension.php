@@ -77,5 +77,6 @@ class AlengoFormExtension extends Extension implements PrependExtensionInterface
 
         $yamlLoader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $yamlLoader->load('services.yml');
+        $yamlLoader->load('controller.yml');
     }
 }

@@ -16,7 +16,7 @@ class FormDataRouteDefaultsProvider implements RouteDefaultsProviderInterface
     {
         return [
             '_controller' => 'alengo_form.controller.website::indexAction',
-            'form_data' => $object ?: $this->formDataRepository->findOneBy(['id' => $id, 'locale' => $locale]),
+            'formData' => $object ?: $this->formDataRepository->findOneBy(['id' => $id, 'locale' => $locale]),
         ];
     }
 

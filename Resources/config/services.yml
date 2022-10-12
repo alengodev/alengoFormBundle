@@ -39,11 +39,3 @@ services:
       - { name: "sulu_route.defaults_provider" }
     arguments:
       [ '@Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository' ]
-  Alengo\Bundle\AlengoFormBundle\Controller\Admin\FormDataController:
-    tags: [ 'controller.service_arguments', { name: 'sulu.context', context: 'admin' } ]
-    arguments:
-      [ '@fos_rest.view_handler.default', '@security.token_storage', '@sulu_core.list_builder.field_descriptor_factory', '@sulu_core.doctrine_list_builder_factory', '@sulu_core.doctrine_rest_helper', '@Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository', '@alengo_form.save_form' ]
-  alengo_form.controller.website:
-    class: 'Alengo\Bundle\AlengoFormBundle\Controller\FormDataController'
-    public: 'true'
-    tags: ['controller.service_arguments', {name: 'sulu.context', context: 'website'}]
