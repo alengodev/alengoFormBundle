@@ -86,11 +86,13 @@ class FormDataController extends AbstractRestController
         $listBuilder = $this->listBuilderFactory->create(FormData::class);
         $this->restHelper->initializeListBuilder($listBuilder, $fieldDescriptors);
 
+        $limit = (int)$listBuilder->getLimit();
+
         $listRepresentation = new PaginatedRepresentation(
             $listBuilder->execute(),
             FormData::RESOURCE_KEY,
-            $listBuilder->getCurrentPage(),
-            $listBuilder->getLimit() ?? 0,
+            (int)$listBuilder->getCurrentPage(),
+            $limit ?? 0,
             $listBuilder->count()
         );
 
