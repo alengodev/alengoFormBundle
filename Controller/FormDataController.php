@@ -18,31 +18,34 @@ use Sulu\Bundle\PreviewBundle\Preview\Preview;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Annotation\Route;
 
 class FormDataController extends AbstractController
 {
-    #[Route('/form_data', name: 'form_data')]
     public function indexAction(FormData $formData, $attributes = [], $preview = false, $partial = false): Response
     {
+        $templatePath = '';
+        if($templatePath === ''){
+            $templatePath = '@AlengoForm/FormData/default.html.twig';
+        }
+
         if (!$formData) {
             throw new NotFoundHttpException();
         }
 
         if ($partial) {
             $content = $this->renderBlock(
-                'formData/index.html.twig',
+                $templatePath,
                 'content',
                 ['formData' => $formData]
             );
         } elseif ($preview) {
             $content = $this->renderPreview(
-                'formData/index.html.twig',
+                $templatePath,
                 ['formData' => $formData]
             );
         } else {
             $content = $this->renderView(
-                'formData/index.html.twig',
+                $templatePath,
                 ['formData' => $formData]
             );
         }
@@ -67,7 +70,7 @@ class FormDataController extends AbstractController
      */
     protected function renderBlock($template, $block, $attributes = [])
     {
-        $twig = $this->get('twig');
+        $twig = $this->container->get('twig');
         $attributes = $twig->mergeGlobals($attributes);
 
         $template = $twig->load($template);
