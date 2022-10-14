@@ -23,9 +23,10 @@ class FormDataController extends AbstractController
 {
     public function indexAction(FormData $formData, $attributes = [], $preview = false, $partial = false): Response
     {
-        $templatePath = '';
-        if ('' === $templatePath) {
+        if (!$formData->getCategory()) {
             $templatePath = '@AlengoForm/FormData/default.html.twig';
+        } else {
+            $templatePath = ' /templates/form/preview/'.$formData->getCategory().'.html.twig';
         }
 
         if (!$formData) {
