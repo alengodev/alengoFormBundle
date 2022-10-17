@@ -26,7 +26,7 @@ class FormDataController extends AbstractController
         if (!$formData->getCategory()) {
             $templatePath = '@AlengoForm/FormData/default.html.twig';
         } else {
-            $templatePath = ' /templates/form/preview/'.$formData->getCategory().'.html.twig';
+            $templatePath = '/form/preview/'.$formData->getCategory().'.html.twig';
         }
 
         if (!$formData) {
