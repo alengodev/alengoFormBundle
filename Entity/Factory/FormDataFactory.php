@@ -1,9 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of Alengo\Bundle\AlengoFormBundle.
+ *
+ * (c) Alengo
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Alengo\Bundle\AlengoFormBundle\Entity\Factory;
 
 use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
-
 
 class FormDataFactory
 {
@@ -31,7 +41,7 @@ class FormDataFactory
         $formData->setChanged(new \DateTime());
         if ($this->getProperty($data, 'comments')) {
             $formData->setComments($this->getProperty($data, 'comments'));
-            $formData->setCountedComments(count($this->getProperty($data, 'comments')));
+            $formData->setCountedComments(\count($this->getProperty($data, 'comments')));
         } else {
             $formData->setComments([]);
             $formData->setCountedComments(0);
@@ -43,7 +53,7 @@ class FormDataFactory
     /**
      * Return property for key or given default value.
      *
-     * @param array $data
+     * @param array  $data
      * @param string $key
      * @param string $default
      *

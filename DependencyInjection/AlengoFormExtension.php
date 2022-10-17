@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 /*
- * This file is part of TheCadien/SuluObjectContentBundle
+ * This file is part of Alengo\Bundle\AlengoFormBundle.
  *
- * (c) Oliver Kossin
+ * (c) Alengo
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -40,12 +40,12 @@ class AlengoFormExtension extends Extension implements PrependExtensionInterface
                 [
                     'lists' => [
                         'directories' => [
-                            __DIR__ . '/../Resources/config/lists',
+                            __DIR__.'/../Resources/config/lists',
                         ],
                     ],
                     'forms' => [
                         'directories' => [
-                            __DIR__ . '/../Resources/config/forms',
+                            __DIR__.'/../Resources/config/forms',
                         ],
                     ],
                     'resources' => [
@@ -75,7 +75,8 @@ class AlengoFormExtension extends Extension implements PrependExtensionInterface
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $yamlLoader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $yamlLoader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $yamlLoader->load('services.yml');
+        $yamlLoader->load('controller.yml');
     }
 }

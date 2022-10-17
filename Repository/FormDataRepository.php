@@ -1,15 +1,25 @@
 <?php
 
-namespace Alengo\Bundle\AlengoFormBundle\Repository;
+declare(strict_types=1);
 
+/*
+ * This file is part of Alengo\Bundle\AlengoFormBundle.
+ *
+ * (c) Alengo
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
+namespace Alengo\Bundle\AlengoFormBundle\Repository;
 
 use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method FormData|null find($id, $lockMode = null, $lockVersion = null)
- * @method FormData|null findOneBy(array $criteria, array $orderBy = null)
+ * @method null|FormData find($id, $lockMode = null, $lockVersion = null)
+ * @method null|FormData findOneBy(array $criteria, array $orderBy = null)
  * @method FormData[]    findAll()
  * @method FormData[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */

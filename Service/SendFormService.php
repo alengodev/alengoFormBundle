@@ -1,14 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of Alengo\Bundle\AlengoFormBundle.
+ *
+ * (c) Alengo
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Alengo\Bundle\AlengoFormBundle\Service;
 
 use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 
 class SendFormService implements SendFormInterface
 {
@@ -16,7 +25,7 @@ class SendFormService implements SendFormInterface
     private string $defaultSenderName;
     private string $defaultSenderMail;
 
-    public function __construct(MailerInterface $mailer, string $defaultSenderName = NULL, string $defaultSenderMail = NULL)
+    public function __construct(MailerInterface $mailer, string $defaultSenderName = null, string $defaultSenderMail = null)
     {
         $this->mailer = $mailer;
         $this->defaultSenderName = $defaultSenderName;
@@ -35,10 +44,11 @@ class SendFormService implements SendFormInterface
             ->context([
                 'formData' => $formData,
                 'data' => $formData->getData(),
-                'additionalData' => $additionalData
-            ]);
+                'additionalData' => $additionalData,
+            ])
+        ;
 
-        if(isset($files) && is_array($files)){
+        if (isset($files) && \is_array($files)) {
             foreach ($files as $attachment) {
                 $message->attachFromPath($attachment);
             }
@@ -46,6 +56,7 @@ class SendFormService implements SendFormInterface
 
         try {
             $this->mailer->send($message);
+
             return true;
         } catch (TransportExceptionInterface $e) {
             return $e->getMessage();

@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 /*
- * This file is part of TheCadien/SuluObjectContentBundle
+ * This file is part of Alengo\Bundle\AlengoFormBundle.
  *
- * (c) Oliver Kossin
+ * (c) Alengo
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -26,8 +26,6 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('alengo_form_bundle');
-
-        return $treeBuilder;
+        return new TreeBuilder('alengo_form_bundle');
     }
 }

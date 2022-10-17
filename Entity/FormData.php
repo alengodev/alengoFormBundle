@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of Alengo\Bundle\AlengoFormBundle.
+ *
+ * (c) Alengo
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Alengo\Bundle\AlengoFormBundle\Entity;
 
 use Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository;
@@ -9,18 +20,17 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: FormDataRepository::class)]
 class FormData
 {
-
-    const RESOURCE_KEY = 'formData';
-    const SECURITY_CONTEXT = 'sulu.form.datas';
+    public const RESOURCE_KEY = 'formData';
+    public const SECURITY_CONTEXT = 'sulu.form.datas';
 
     #[ORM\Column(type: Types::INTEGER)]
     #[ORM\Id, ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
-    #[ORM\Column(type: Types::STRING,length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private $locale;
 
-    #[ORM\Column(type: Types::STRING,length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private $webspaceKey;
 
     #[ORM\Column(type: Types::BOOLEAN)]
@@ -29,22 +39,22 @@ class FormData
     #[ORM\Column(type: Types::JSON)]
     private $data;
 
-    #[ORM\Column(type: Types::STRING,length: 255,nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private $receiverMail;
 
-    #[ORM\Column(type: Types::STRING,length: 255,nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private $userMail;
 
-    #[ORM\Column(type: Types::STRING,length: 255,nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private $category;
 
-    #[ORM\Column(type: Types::JSON,nullable: true)]
+    #[ORM\Column(type: Types::JSON, nullable: true)]
     private $comments;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE,nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private $created;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE,nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private $changed;
 
     #[ORM\Column(type: Types::INTEGER)]
@@ -218,20 +228,13 @@ class FormData
         $this->category = $category;
     }
 
-    /**
-     * @return bool
-     */
     public function isCopy(): bool
     {
         return $this->copy;
     }
 
-    /**
-     * @param bool $copy
-     */
     public function setCopy(bool $copy): void
     {
         $this->copy = $copy;
     }
-
 }
