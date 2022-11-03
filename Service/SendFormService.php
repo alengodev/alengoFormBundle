@@ -40,13 +40,16 @@ class SendFormService implements SendFormInterface
             ->replyTo(isset($formData->getData()['email']) ? $formData->getData()['email'] : $this->defaultSenderMail)
             ->subject($title)
             ->htmlTemplate($template)
-            ->textTemplate($xmlTemplate)
             ->context([
                 'formData' => $formData,
                 'data' => $formData->getData(),
                 'additionalData' => $additionalData,
             ])
         ;
+
+        if($xmlTemplate) {
+            $message->textTemplate($xmlTemplate);
+        }
 
         if (isset($files) && \is_array($files)) {
             foreach ($files as $attachment) {
