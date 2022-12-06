@@ -13,6 +13,7 @@ services:
     public: 'true'
     arguments:
       [ '@doctrine' ]
+    tags: ['doctrine.repository_service']
   Alengo\Bundle\AlengoFormBundle\Admin\FormDataAdmin:
     tags: [ 'sulu.admin', { name: 'sulu.context', context: 'admin' } ]
     arguments:
