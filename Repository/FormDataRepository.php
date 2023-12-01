@@ -53,11 +53,11 @@ class FormDataRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
-    public function listFormData($datefrom = false, $dateto = false, $locale = false, $category = false, $webspaceKey = false, $receiverMail = false, $userMail = false): array
+    public function listFormData($datefrom = '', $dateto = '', $locale = '', $category = '', $webspaceKey = '', $receiverMail = '', $userMail = ''): array
     {
         $qb = $this->createQueryBuilder('f');
 
-        if ($datefrom && $dateto) {
+        if ($this->isValidDate($datefrom) && $this->isValidDate($dateto)) {
             $dateTimeFrom = new \DateTime($datefrom . ' 00:00:00');
             $dateTimeTo = new \DateTime($dateto . ' 23:59:59');
             $qb->andWhere('(f.created >= :datefrom AND f.created <= :dateto)');
@@ -93,5 +93,9 @@ class FormDataRepository extends ServiceEntityRepository
         $qb->orderBy('f.created', 'DESC');
 
         return $qb->getQuery()->getResult();
+    }
+
+    private function isValidDate($date) {
+        return (strtotime($date) !== false);
     }
 }
