@@ -34,7 +34,7 @@ class FormDataService implements FormDataInterface
         }
 
         return [
-            'count' => count($formData),
+            'count' => \count($formData),
             'data' => $formData,
         ];
     }
