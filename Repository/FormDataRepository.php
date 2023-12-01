@@ -52,4 +52,46 @@ class FormDataRepository extends ServiceEntityRepository
         );
         $this->getEntityManager()->flush();
     }
+
+    public function listFormData($datefrom = false, $dateto = false, $locale = false, $category = false, $webspaceKey = false, $receiverMail = false, $userMail = false): array
+    {
+        $qb = $this->createQueryBuilder('f');
+
+        if ($datefrom && $dateto) {
+            $dateTimeFrom = new \DateTime($datefrom . ' 00:00:00');
+            $dateTimeTo = new \DateTime($dateto . ' 23:59:59');
+            $qb->andWhere('(f.created >= :datefrom AND f.created <= :dateto)');
+            $qb->setParameter('datefrom', $dateTimeFrom->format('Y-m-d H:i:s'));
+            $qb->setParameter('dateto', $dateTimeTo->format('Y-m-d H:i:s'));
+        }
+
+        if (!empty($locale)) {
+            $qb->andWhere('f.locale = :locale');
+            $qb->setParameter('locale', $locale);
+        }
+
+        if (!empty($category)) {
+            $qb->andWhere('f.category = :category');
+            $qb->setParameter('category', $category);
+        }
+
+        if (!empty($webspaceKey)) {
+            $qb->andWhere('f.webspaceKey = :webspacekey');
+            $qb->setParameter('webspacekey', $webspaceKey);
+        }
+
+        if (!empty($receiverMail)) {
+            $qb->andWhere('f.receiverMail = :receivermail');
+            $qb->setParameter('receivermail', $receiverMail);
+        }
+
+        if (!empty($userMail)) {
+            $qb->andWhere('f.userMail = :usermail');
+            $qb->setParameter('usermail', $userMail);
+        }
+
+        $qb->orderBy('f.created', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
 }

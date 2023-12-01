@@ -40,3 +40,11 @@ services:
             - { name: "sulu_route.defaults_provider" }
         arguments:
           [ '@Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository' ]
+    alengo_form.form_data:
+        class: 'Alengo\Bundle\AlengoFormBundle\Service\FormDataService'
+        public: 'true'
+        arguments:
+          [ '@Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository' ]
+    Alengo\Bundle\AlengoFormBundle\Service\FormDataInterface:
+        public: 'true'
+        alias: 'alengo_form.form_data'
