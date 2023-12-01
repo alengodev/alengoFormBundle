@@ -26,7 +26,7 @@ class FormDataController extends AbstractController
         if (!$formData->getCategory()) {
             $templatePath = '@AlengoForm/FormData/default.html.twig';
         } else {
-            $templatePath = '/form/preview/'.$formData->getCategory().'.html.twig';
+            $templatePath = '/form/preview/' . $formData->getCategory() . '.html.twig';
         }
 
         if (!$formData) {
@@ -37,17 +37,17 @@ class FormDataController extends AbstractController
             $content = $this->renderBlock(
                 $templatePath,
                 'content',
-                ['formData' => $formData]
+                ['formData' => $formData],
             );
         } elseif ($preview) {
             $content = $this->renderPreview(
                 $templatePath,
-                ['formData' => $formData]
+                ['formData' => $formData],
             );
         } else {
             $content = $this->renderView(
                 $templatePath,
-                ['formData' => $formData]
+                ['formData' => $formData],
             );
         }
 
@@ -69,24 +69,24 @@ class FormDataController extends AbstractController
      * @param mixed $block
      * @param mixed $attributes
      */
-    protected function renderBlock($template, $block, $attributes = [])
+    protected function renderBlock($template, $block, $attributes = [], Response $response = null)
     {
         $twig = $this->container->get('twig');
         $attributes = $twig->mergeGlobals($attributes);
 
         $template = $twig->load($template);
 
-        $level = ob_get_level();
-        ob_start();
+        $level = \ob_get_level();
+        \ob_start();
 
         try {
             $rendered = $template->renderBlock($block, $attributes);
-            ob_end_clean();
+            \ob_end_clean();
 
             return $rendered;
         } catch (\Exception $e) {
-            while (ob_get_level() > $level) {
-                ob_end_clean();
+            while (\ob_get_level() > $level) {
+                \ob_end_clean();
             }
 
             throw $e;

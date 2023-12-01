@@ -53,11 +53,11 @@ class FormDataFactory
     /**
      * Return property for key or given default value.
      *
-     * @param array  $data
+     * @param array $data
      * @param string $key
      * @param string $default
      *
-     * @return null|string
+     * @return string|null
      */
     protected function getProperty($data, $key, $default = null)
     {

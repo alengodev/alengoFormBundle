@@ -19,14 +19,8 @@ use Sulu\Bundle\PreviewBundle\Preview\Object\PreviewObjectProviderInterface;
 
 class FormDataObjectProvider implements PreviewObjectProviderInterface
 {
-    /**
-     * @var FormDataRepository
-     */
-    private $formDataRepository;
-
-    public function __construct(FormDataRepository $formDataRepository)
+    public function __construct(private readonly FormDataRepository $formDataRepository)
     {
-        $this->formDataRepository = $formDataRepository;
     }
 
     public function getObject($id, $locale): ?FormData
@@ -49,12 +43,12 @@ class FormDataObjectProvider implements PreviewObjectProviderInterface
 
     public function serialize($object)
     {
-        return serialize($object);
+        return \serialize($object);
     }
 
     public function deserialize($serializedObject, $objectClass)
     {
-        return unserialize($serializedObject);
+        return \unserialize($serializedObject);
     }
 
     public function getSecurityContext($id, $locale): ?string

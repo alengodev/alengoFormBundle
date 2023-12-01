@@ -17,6 +17,8 @@ use Alengo\Bundle\AlengoFormBundle\Api\FormData as FormDataApi;
 use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
 use Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository;
 use Alengo\Bundle\AlengoFormBundle\Service\SaveFormService;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
@@ -37,47 +39,20 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  */
 class FormDataController extends AbstractRestController
 {
-    /**
-     * @var ViewHandlerInterface
-     */
-    private $viewHandler;
-
-    /**
-     * @var FieldDescriptorFactoryInterface
-     */
-    private $fieldDescriptorFactory;
-
-    /**
-     * @var DoctrineListBuilderFactoryInterface
-     */
-    private $listBuilderFactory;
-
-    /**
-     * @var RestHelperInterface
-     */
-    private $restHelper;
-
-    private FormDataRepository $repository;
-
-    private SaveFormService $formService;
+    private readonly ViewHandlerInterface $viewHandler;
 
     public function __construct(
         ViewHandlerInterface $viewHandler,
         TokenStorageInterface $tokenStorage,
-        FieldDescriptorFactoryInterface $fieldDescriptorFactory,
-        DoctrineListBuilderFactoryInterface $listBuilderFactory,
-        RestHelperInterface $restHelper,
-        FormDataRepository $repository,
-        SaveFormService $formService
+        private readonly FieldDescriptorFactoryInterface $fieldDescriptorFactory,
+        private readonly DoctrineListBuilderFactoryInterface $listBuilderFactory,
+        private readonly RestHelperInterface $restHelper,
+        private readonly FormDataRepository $repository,
+        private readonly SaveFormService $formService,
     ) {
         parent::__construct($viewHandler, $tokenStorage);
 
         $this->viewHandler = $viewHandler;
-        $this->fieldDescriptorFactory = $fieldDescriptorFactory;
-        $this->listBuilderFactory = $listBuilderFactory;
-        $this->restHelper = $restHelper;
-        $this->repository = $repository;
-        $this->formService = $formService;
     }
 
     public function cgetAction(): Response
@@ -93,7 +68,7 @@ class FormDataController extends AbstractRestController
             FormData::RESOURCE_KEY,
             (int) $listBuilder->getCurrentPage(),
             $limit ?? 0,
-            $listBuilder->count()
+            $listBuilder->count(),
         );
 
         return $this->viewHandler->handle(View::create($listRepresentation));
@@ -127,14 +102,14 @@ class FormDataController extends AbstractRestController
     }
 
     /**
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function deleteAction(int $id): Response
     {
         try {
             $this->repository->remove($id);
-        } catch (\Exception $tnfe) {
+        } catch (\Exception) {
             throw new EntityNotFoundException(self::$entityName, $id);
         }
 

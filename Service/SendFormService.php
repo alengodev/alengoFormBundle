@@ -21,15 +21,11 @@ use Symfony\Component\Mime\Address;
 
 class SendFormService implements SendFormInterface
 {
-    private MailerInterface $mailer;
-    private string $defaultSenderName;
-    private string $defaultSenderMail;
-
-    public function __construct(MailerInterface $mailer, string $defaultSenderName = null, string $defaultSenderMail = null)
-    {
-        $this->mailer = $mailer;
-        $this->defaultSenderName = $defaultSenderName;
-        $this->defaultSenderMail = $defaultSenderMail;
+    public function __construct(
+        private readonly MailerInterface $mailer,
+        private readonly ?string $defaultSenderName = null,
+        private readonly ?string $defaultSenderMail = null,
+    ) {
     }
 
     public function sendFormDataAsMail(FormData $formData, string $template, string $title, string $receiverMail, $xmlTemplate = false, $files = false, $additionalData = false)
@@ -37,17 +33,16 @@ class SendFormService implements SendFormInterface
         $message = (new TemplatedEmail())
             ->from(new Address($this->defaultSenderMail, $this->defaultSenderName))
             ->to(new Address($receiverMail))
-            ->replyTo(isset($formData->getData()['email']) ? $formData->getData()['email'] : $this->defaultSenderMail)
+            ->replyTo($formData->getData()['email'] ?? $this->defaultSenderMail)
             ->subject($title)
             ->htmlTemplate($template)
             ->context([
                 'formData' => $formData,
                 'data' => $formData->getData(),
                 'additionalData' => $additionalData,
-            ])
-        ;
+            ]);
 
-        if($xmlTemplate) {
+        if ($xmlTemplate) {
             $message->textTemplate($xmlTemplate);
         }
 

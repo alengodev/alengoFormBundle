@@ -20,8 +20,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: FormDataRepository::class)]
 class FormData
 {
-    public const RESOURCE_KEY = 'formData';
-    public const SECURITY_CONTEXT = 'sulu.form.datas';
+    final public const RESOURCE_KEY = 'formData';
+    final public const SECURITY_CONTEXT = 'sulu.form.datas';
 
     #[ORM\Column(type: Types::INTEGER)]
     #[ORM\Id, ORM\GeneratedValue(strategy: 'AUTO')]
@@ -34,7 +34,7 @@ class FormData
     private $webspaceKey;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    private $copy = false;
+    private bool $copy = false;
 
     #[ORM\Column(type: Types::JSON)]
     private $data;
@@ -58,7 +58,7 @@ class FormData
     private $changed;
 
     #[ORM\Column(type: Types::INTEGER)]
-    private $countedComments = 0;
+    private int $countedComments = 0;
 
     /**
      * @return mixed
@@ -76,10 +76,7 @@ class FormData
         return $this->locale;
     }
 
-    /**
-     * @param mixed $locale
-     */
-    public function setLocale($locale): void
+    public function setLocale(mixed $locale): void
     {
         $this->locale = $locale;
     }
@@ -92,10 +89,7 @@ class FormData
         return $this->webspaceKey;
     }
 
-    /**
-     * @param mixed $webspaceKey
-     */
-    public function setWebspaceKey($webspaceKey): void
+    public function setWebspaceKey(mixed $webspaceKey): void
     {
         $this->webspaceKey = $webspaceKey;
     }
@@ -108,10 +102,7 @@ class FormData
         return $this->data;
     }
 
-    /**
-     * @param mixed $data
-     */
-    public function setData($data): void
+    public function setData(mixed $data): void
     {
         $this->data = $data;
     }
@@ -124,10 +115,7 @@ class FormData
         return $this->created;
     }
 
-    /**
-     * @param mixed $created
-     */
-    public function setCreated($created): void
+    public function setCreated(mixed $created): void
     {
         $this->created = $created;
     }
@@ -140,10 +128,7 @@ class FormData
         return $this->changed;
     }
 
-    /**
-     * @param mixed $changed
-     */
-    public function setChanged($changed): void
+    public function setChanged(mixed $changed): void
     {
         $this->changed = $changed;
     }
@@ -156,10 +141,7 @@ class FormData
         return $this->receiverMail;
     }
 
-    /**
-     * @param mixed $receiverMail
-     */
-    public function setReceiverMail($receiverMail): void
+    public function setReceiverMail(mixed $receiverMail): void
     {
         $this->receiverMail = $receiverMail;
     }
@@ -172,10 +154,7 @@ class FormData
         return $this->userMail;
     }
 
-    /**
-     * @param mixed $userMail
-     */
-    public function setUserMail($userMail): void
+    public function setUserMail(mixed $userMail): void
     {
         $this->userMail = $userMail;
     }
@@ -188,10 +167,7 @@ class FormData
         return $this->comments;
     }
 
-    /**
-     * @param mixed $comments
-     */
-    public function setComments($comments): void
+    public function setComments(mixed $comments): void
     {
         $this->comments = $comments;
     }
@@ -204,10 +180,7 @@ class FormData
         return $this->countedComments;
     }
 
-    /**
-     * @param mixed $countedComments
-     */
-    public function setCountedComments($countedComments): void
+    public function setCountedComments(mixed $countedComments): void
     {
         $this->countedComments = $countedComments;
     }
@@ -220,10 +193,7 @@ class FormData
         return $this->category;
     }
 
-    /**
-     * @param mixed $category
-     */
-    public function setCategory($category): void
+    public function setCategory(mixed $category): void
     {
         $this->category = $category;
     }

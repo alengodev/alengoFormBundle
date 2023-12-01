@@ -1,0 +1,42 @@
+services:
+    alengo_form.save_form:
+        class: 'Alengo\Bundle\AlengoFormBundle\Service\SaveFormService'
+        public: 'true'
+        arguments:
+          [ '@Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository','@Alengo\Bundle\AlengoFormBundle\Entity\Factory\FormDataFactory','%env(resolve:DEFAULT_SENDER_MAIL)%' ]
+    alengo_form.send_form:
+        class: 'Alengo\Bundle\AlengoFormBundle\Service\SendFormService'
+        public: 'true'
+        arguments:
+          [ '@Symfony\Component\Mailer\MailerInterface','%env(resolve:DEFAULT_SENDER_NAME)%','%env(resolve:DEFAULT_SENDER_MAIL)%' ]
+    Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository:
+        public: 'true'
+        arguments:
+          [ '@doctrine' ]
+        tags: [ 'doctrine.repository_service' ]
+    Alengo\Bundle\AlengoFormBundle\Admin\FormDataAdmin:
+        tags: [ 'sulu.admin', { name: 'sulu.context', context: 'admin' } ]
+        arguments:
+          [ '@sulu_admin.view_builder_factory', '@sulu_security.security_checker', '@sulu_core.webspace.webspace_manager' ]
+    Alengo\Bundle\AlengoFormBundle\Entity\Factory\FormDataFactory:
+        public: 'true'
+    Alengo\Bundle\AlengoFormBundle\Service\SaveFormInterface:
+        public: 'true'
+        alias: 'alengo_form.save_form'
+    Alengo\Bundle\AlengoFormBundle\Service\SendFormInterface:
+        public: 'true'
+        alias: 'alengo_form.send_form'
+    alengo_form_preview_object_provider:
+        class: Alengo\Bundle\AlengoFormBundle\Preview\FormDataObjectProvider
+        public: 'true'
+        tags:
+            - { name: "sulu_preview.object_provider", provider-key: 'formData' }
+        arguments:
+          [ '@Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository' ]
+    alengo_form_route_default_provider:
+        class: Alengo\Bundle\AlengoFormBundle\Routing\FormDataRouteDefaultsProvider
+        public: 'true'
+        tags:
+            - { name: "sulu_route.defaults_provider" }
+        arguments:
+          [ '@Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository' ]

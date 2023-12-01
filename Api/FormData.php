@@ -27,17 +27,19 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
  */
 class FormData
 {
-    public function __construct(FormDataEntity $entity, $locale)
+    public $entity;
+
+    public function __construct(FormDataEntity $entity, public $locale)
     {
         // @var FormDataEntity entity
         $this->entity = $entity;
-        $this->locale = $locale;
     }
 
     /**
      * @VirtualProperty
      *
      * @SerializedName("id")
+     *
      * @Groups({"fullFormData"})
      */
     public function getId(): ?int
@@ -49,6 +51,7 @@ class FormData
      * @VirtualProperty
      *
      * @SerializedName("created")
+     *
      * @Groups({"fullFormData"})
      */
     public function getCreated(): \DateTime
@@ -60,6 +63,7 @@ class FormData
      * @VirtualProperty
      *
      * @SerializedName("changed")
+     *
      * @Groups({"fullFormData"})
      */
     public function getChanged(): \DateTime
@@ -71,6 +75,7 @@ class FormData
      * @VirtualProperty
      *
      * @SerializedName("webspace")
+     *
      * @Groups({"fullFormData"})
      */
     public function getWebspace(): string
@@ -82,6 +87,7 @@ class FormData
      * @VirtualProperty
      *
      * @SerializedName("locale")
+     *
      * @Groups({"fullFormData"})
      */
     public function getLocale(): string
@@ -93,6 +99,7 @@ class FormData
      * @VirtualProperty
      *
      * @SerializedName("receiverMail")
+     *
      * @Groups({"fullFormData"})
      */
     public function getReceiverMail(): ?string
@@ -104,6 +111,7 @@ class FormData
      * @VirtualProperty
      *
      * @SerializedName("userMail")
+     *
      * @Groups({"fullFormData"})
      */
     public function getUserMail(): ?string
@@ -115,6 +123,7 @@ class FormData
      * @VirtualProperty
      *
      * @SerializedName("data")
+     *
      * @Groups({"fullFormData"})
      *
      * @throws \JsonException
@@ -132,15 +141,16 @@ class FormData
                 'label' => $key,
             ];
         }
-        ksort($data);
+        \ksort($data);
 
-        return array_values($data);
+        return \array_values($data);
     }
 
     /**
      * @VirtualProperty
      *
      * @SerializedName("comments")
+     *
      * @Groups({"fullFormData"})
      */
     public function getComments(): array
@@ -156,6 +166,7 @@ class FormData
      * @VirtualProperty
      *
      * @SerializedName("countedComments")
+     *
      * @Groups({"fullFormData"})
      */
     public function getCountedComments(): int
@@ -167,6 +178,7 @@ class FormData
      * @VirtualProperty
      *
      * @SerializedName("category")
+     *
      * @Groups({"fullFormData"})
      */
     public function getCategory(): ?string
@@ -178,6 +190,7 @@ class FormData
      * @VirtualProperty
      *
      * @SerializedName("copy")
+     *
      * @Groups({"fullFormData"})
      */
     public function getCopy(): ?int

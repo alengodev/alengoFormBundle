@@ -15,13 +15,15 @@ namespace Alengo\Bundle\AlengoFormBundle\Repository;
 
 use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method null|FormData find($id, $lockMode = null, $lockVersion = null)
- * @method null|FormData findOneBy(array $criteria, array $orderBy = null)
- * @method FormData[]    findAll()
- * @method FormData[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method FormData|null find($id, $lockMode = null, $lockVersion = null)
+ * @method FormData|null findOneBy(array $criteria, array $orderBy = null)
+ * @method FormData[] findAll()
+ * @method FormData[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class FormDataRepository extends ServiceEntityRepository
 {
@@ -31,8 +33,8 @@ class FormDataRepository extends ServiceEntityRepository
     }
 
     /**
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function save(FormData $formData): void
     {
@@ -45,8 +47,8 @@ class FormDataRepository extends ServiceEntityRepository
         $this->getEntityManager()->remove(
             $this->getEntityManager()->getReference(
                 $this->getClassName(),
-                $id
-            )
+                $id,
+            ),
         );
         $this->getEntityManager()->flush();
     }

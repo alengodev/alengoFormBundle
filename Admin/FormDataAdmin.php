@@ -26,23 +26,13 @@ use Sulu\Component\Webspace\Manager\WebspaceManagerInterface;
 
 class FormDataAdmin extends Admin
 {
-    public const FORM_DATA_LIST_VIEW = 'app.form_datas_list';
-    public const FORM_DATA_FORM_KEY = 'form_data_details';
-    public const FORM_DATA_ADD_FORM_VIEW = 'app.form_data_add_form';
-    public const FORM_DATA_EDIT_FORM_VIEW = 'app.form_data_edit_form';
+    final public const FORM_DATA_LIST_VIEW = 'app.form_datas_list';
+    final public const FORM_DATA_FORM_KEY = 'form_data_details';
+    final public const FORM_DATA_ADD_FORM_VIEW = 'app.form_data_add_form';
+    final public const FORM_DATA_EDIT_FORM_VIEW = 'app.form_data_edit_form';
 
-    private ViewBuilderFactoryInterface $viewBuilderFactory;
-    private SecurityCheckerInterface $securityChecker;
-    private WebspaceManagerInterface $webspaceManager;
-
-    public function __construct(
-        ViewBuilderFactoryInterface $viewBuilderFactory,
-        SecurityCheckerInterface $securityChecker,
-        WebspaceManagerInterface $webspaceManager,
-    ) {
-        $this->viewBuilderFactory = $viewBuilderFactory;
-        $this->securityChecker = $securityChecker;
-        $this->webspaceManager = $webspaceManager;
+    public function __construct(private readonly ViewBuilderFactoryInterface $viewBuilderFactory, private readonly SecurityCheckerInterface $securityChecker, private readonly WebspaceManagerInterface $webspaceManager)
+    {
     }
 
     public function configureNavigationItems(NavigationItemCollection $navigationItemCollection): void
@@ -87,8 +77,7 @@ class FormDataAdmin extends Admin
                 ->addLocales($locales)
                 ->setAddView(static::FORM_DATA_ADD_FORM_VIEW)
                 ->setEditView(static::FORM_DATA_EDIT_FORM_VIEW)
-                ->addToolbarActions($listToolbarActions)
-            ;
+                ->addToolbarActions($listToolbarActions);
 
             $viewCollection->add($listView);
 
@@ -96,20 +85,18 @@ class FormDataAdmin extends Admin
                 ->createResourceTabViewBuilder(static::FORM_DATA_EDIT_FORM_VIEW, '/form_datas/:locale/:id')
                 ->setResourceKey(FormData::RESOURCE_KEY)
                 ->addLocales($locales)
-                ->setBackView(static::FORM_DATA_LIST_VIEW)
-            ;
+                ->setBackView(static::FORM_DATA_LIST_VIEW);
 
             $viewCollection->add($editFormView);
 
             $editDetailsFormView = $this->viewBuilderFactory
-                ->createPreviewFormViewBuilder(static::FORM_DATA_EDIT_FORM_VIEW.'.details', '/details')
+                ->createPreviewFormViewBuilder(static::FORM_DATA_EDIT_FORM_VIEW . '.details', '/details')
                 ->setPreviewCondition('id != null')
                 ->setResourceKey(FormData::RESOURCE_KEY)
                 ->setFormKey(static::FORM_DATA_FORM_KEY)
                 ->setTabTitle('sulu_admin.details')
                 ->addToolbarActions($formToolbarActions)
-                ->setParent(static::FORM_DATA_EDIT_FORM_VIEW)
-            ;
+                ->setParent(static::FORM_DATA_EDIT_FORM_VIEW);
 
             $viewCollection->add($editDetailsFormView);
         }
