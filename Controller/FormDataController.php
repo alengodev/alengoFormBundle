@@ -34,7 +34,7 @@ class FormDataController extends AbstractController
         }
 
         if ($partial) {
-            $content = $this->renderBlock(
+            $content = $this->renderBlockView(
                 $templatePath,
                 'content',
                 ['formData' => $formData],
@@ -69,7 +69,7 @@ class FormDataController extends AbstractController
      * @param mixed $block
      * @param mixed $attributes
      */
-    protected function renderBlock($template, $block, $attributes = [], Response $response = null)
+    protected function renderBlockView($template, $block, $attributes = [], Response $response = null): string
     {
         $twig = $this->container->get('twig');
         $attributes = $twig->mergeGlobals($attributes);
