@@ -95,7 +95,8 @@ class FormDataRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    private function isValidDate($date) {
-        return (strtotime($date) !== false);
+    private function isValidDate($date)
+    {
+        return false !== \strtotime((string) $date);
     }
 }

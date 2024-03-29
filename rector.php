@@ -40,7 +40,7 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->sets([
         SetList::CODE_QUALITY,
-        LevelSetList::UP_TO_PHP_82,
+        LevelSetList::UP_TO_PHP_83,
     ]);
 
     // symfony rules
@@ -49,7 +49,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([
         SymfonySetList::SYMFONY_CODE_QUALITY,
         SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
-        SymfonyLevelSetList::UP_TO_SYMFONY_63,
+        // SymfonyLevelSetList::UP_TO_SYMFONY_64,
         DoctrineSetList::ANNOTATIONS_TO_ATTRIBUTES,
         SymfonySetList::ANNOTATIONS_TO_ATTRIBUTES,
     ]);
