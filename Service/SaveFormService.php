@@ -30,7 +30,7 @@ class SaveFormService implements SaveFormInterface
     /**
      * @throws ExceptionInterface
      */
-    public function saveFormDataFromRequest(array $data, string $webspace, string $location, string $category, string $receiverMail = null, bool $copy = false): FormData
+    public function saveFormDataFromRequest(array $data, string $webspace, string $location, string $category, ?string $receiverMail = null, bool $copy = false): FormData
     {
         $formData = $this->factory->generateFormDataByData($data, $webspace, $location, $category, $receiverMail ?? $this->defaultReceiverMail, $copy);
         $this->repository->save($formData);

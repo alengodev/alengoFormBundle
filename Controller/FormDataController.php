@@ -69,7 +69,7 @@ class FormDataController extends AbstractController
      * @param mixed $block
      * @param mixed $attributes
      */
-    protected function renderBlockView($template, $block, $attributes = [], Response $response = null): string
+    protected function renderBlockView($template, $block, $attributes = [], ?Response $response = null): string
     {
         $twig = $this->container->get('twig');
         $attributes = $twig->mergeGlobals($attributes);
