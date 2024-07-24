@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
 use Rector\Doctrine\Set\DoctrineSetList;
-use Rector\PHPUnit\Set\PHPUnitLevelSetList;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Symfony\CodeQuality\Rector\ClassMethod\ActionSuffixRemoverRector;
-use Rector\Symfony\Set\SymfonyLevelSetList;
 use Rector\Symfony\Set\SymfonySetList;
 use Sulu\Rector\Set\SuluLevelSetList;
 
@@ -49,7 +47,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([
         SymfonySetList::SYMFONY_CODE_QUALITY,
         SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
-        // SymfonyLevelSetList::UP_TO_SYMFONY_64,
+        SymfonySetList::SYMFONY_71,
         DoctrineSetList::ANNOTATIONS_TO_ATTRIBUTES,
         SymfonySetList::ANNOTATIONS_TO_ATTRIBUTES,
     ]);
@@ -57,6 +55,11 @@ return static function (RectorConfig $rectorConfig): void {
     // doctrine rules
     $rectorConfig->sets([
         DoctrineSetList::DOCTRINE_CODE_QUALITY,
+    ]);
+
+    // phpunit rules
+    $rectorConfig->sets([
+        PHPUnitSetList::PHPUNIT_100,
     ]);
 
     // sulu rules
