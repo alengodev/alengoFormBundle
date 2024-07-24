@@ -59,12 +59,6 @@ return static function (RectorConfig $rectorConfig): void {
         DoctrineSetList::DOCTRINE_CODE_QUALITY,
     ]);
 
-    // phpunit rules
-    $rectorConfig->sets([
-        PHPUnitLevelSetList::UP_TO_PHPUNIT_90,
-        PHPUnitSetList::PHPUNIT_91,
-    ]);
-
     // sulu rules
     $rectorConfig->sets([
         SuluLevelSetList::UP_TO_SULU_25,
