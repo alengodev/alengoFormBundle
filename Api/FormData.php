@@ -35,99 +35,67 @@ class FormData
         $this->entity = $entity;
     }
 
-    /**
-     * @VirtualProperty
-     *
-     * @SerializedName("id")
-     *
-     * @Groups({"fullFormData"})
-     */
+
+    #[VirtualProperty()]
+    #[Groups(['fullFormData'])]
     public function getId(): ?int
     {
         return $this->entity->getId();
     }
 
-    /**
-     * @VirtualProperty
-     *
-     * @SerializedName("created")
-     *
-     * @Groups({"fullFormData"})
-     */
+
+    #[SerializedName('created')]
+    #[VirtualProperty()]
+    #[Groups(['fullFormData'])]
     public function getCreated(): \DateTime
     {
         return $this->entity->getCreated();
     }
 
-    /**
-     * @VirtualProperty
-     *
-     * @SerializedName("changed")
-     *
-     * @Groups({"fullFormData"})
-     */
+    #[SerializedName('changed')]
+    #[VirtualProperty()]
+    #[Groups(['fullFormData'])]
     public function getChanged(): \DateTime
     {
         return $this->entity->getChanged();
     }
 
-    /**
-     * @VirtualProperty
-     *
-     * @SerializedName("webspace")
-     *
-     * @Groups({"fullFormData"})
-     */
+    #[SerializedName('webspace')]
+    #[VirtualProperty()]
+    #[Groups(['fullFormData'])]
     public function getWebspace(): string
     {
         return $this->entity->getWebspaceKey();
     }
 
-    /**
-     * @VirtualProperty
-     *
-     * @SerializedName("locale")
-     *
-     * @Groups({"fullFormData"})
-     */
+    #[SerializedName('locale')]
+    #[VirtualProperty()]
+    #[Groups(['fullFormData'])]
     public function getLocale(): string
     {
         return $this->entity->getLocale();
     }
 
-    /**
-     * @VirtualProperty
-     *
-     * @SerializedName("receiverMail")
-     *
-     * @Groups({"fullFormData"})
-     */
+    #[SerializedName('receiverMail')]
+    #[VirtualProperty()]
+    #[Groups(['fullFormData'])]
     public function getReceiverMail(): ?string
     {
         return $this->entity->getReceiverMail();
     }
 
-    /**
-     * @VirtualProperty
-     *
-     * @SerializedName("userMail")
-     *
-     * @Groups({"fullFormData"})
-     */
+
+    #[SerializedName('userMail')]
+    #[VirtualProperty()]
+    #[Groups(['fullFormData'])]
     public function getUserMail(): ?string
     {
         return $this->entity->getUserMail();
     }
 
-    /**
-     * @VirtualProperty
-     *
-     * @SerializedName("data")
-     *
-     * @Groups({"fullFormData"})
-     *
-     * @throws \JsonException
-     */
+    #[SerializedName('data')]
+    #[VirtualProperty()]
+    #[Groups(['fullFormData'])]
     public function getData(): array
     {
         $data = [];
@@ -146,13 +114,10 @@ class FormData
         return \array_values($data);
     }
 
-    /**
-     * @VirtualProperty
-     *
-     * @SerializedName("comments")
-     *
-     * @Groups({"fullFormData"})
-     */
+
+    #[SerializedName('comments')]
+    #[VirtualProperty()]
+    #[Groups(['fullFormData'])]
     public function getComments(): array
     {
         if (!$this->entity->getComments()) {
@@ -162,37 +127,28 @@ class FormData
         return $this->entity->getComments();
     }
 
-    /**
-     * @VirtualProperty
-     *
-     * @SerializedName("countedComments")
-     *
-     * @Groups({"fullFormData"})
-     */
+
+    #[SerializedName('countedComments')]
+    #[VirtualProperty()]
+    #[Groups(['fullFormData'])]
     public function getCountedComments(): int
     {
         return $this->entity->getCountedComments();
     }
 
-    /**
-     * @VirtualProperty
-     *
-     * @SerializedName("category")
-     *
-     * @Groups({"fullFormData"})
-     */
+
+    #[SerializedName('category')]
+    #[VirtualProperty()]
+    #[Groups(['fullFormData'])]
     public function getCategory(): ?string
     {
         return $this->entity->getCategory();
     }
 
-    /**
-     * @VirtualProperty
-     *
-     * @SerializedName("copy")
-     *
-     * @Groups({"fullFormData"})
-     */
+
+    #[SerializedName('copy')]
+    #[VirtualProperty()]
+    #[Groups(['fullFormData'])]
     public function getCopy(): ?int
     {
         if ($this->entity->isCopy()) {
