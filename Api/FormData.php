@@ -22,19 +22,15 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 /**
  * The FormData class which will be exported to the API.
- *
- * @ExclusionPolicy("all")
  */
+#[ExclusionPolicy('all')]
 class FormData
 {
-    public $entity;
-
-    public function __construct(FormDataEntity $entity, public $locale)
+    public function __construct(FormDataEntity $entity)
     {
         // @var FormDataEntity entity
         $this->entity = $entity;
     }
-
 
     #[VirtualProperty()]
     #[Groups(['fullFormData'])]
@@ -160,8 +156,6 @@ class FormData
 
     private function getDataAsJsonElement(array $dataElement): string
     {
-        $encoder = new JsonEncoder();
-
-        return $encoder->encode($dataElement, 'json');
+        return (new JsonEncoder())->encode($dataElement, 'json');
     }
 }
