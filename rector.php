@@ -3,16 +3,11 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
-use Rector\Doctrine\Set\DoctrineSetList;
-use Rector\PHPUnit\Set\PHPUnitSetList;
-use Rector\Set\ValueObject\LevelSetList;
-use Rector\Set\ValueObject\SetList;
 use Rector\Symfony\CodeQuality\Rector\ClassMethod\ActionSuffixRemoverRector;
 use Rector\Symfony\Set\SymfonySetList;
-use Sulu\Rector\Set\SuluLevelSetList;
 
-return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->paths([
+return RectorConfig::configure()
+    ->withPaths([
         __DIR__ . '/Admin',
         __DIR__ . '/Api',
         __DIR__ . '/Controller',
@@ -23,52 +18,33 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/Resources',
         __DIR__ . '/Routing',
         __DIR__ . '/Service',
-    ]);
-
-    $rectorConfig->phpstanConfigs([
-        __DIR__ . '/phpstan.neon',
+    ])
+    ->withRootFiles()
+    ->withPHPStanConfigs([
+        __DIR__ . '/phpstan.dist.neon',
         // rector does not load phpstan extension automatically so require them manually here:
         __DIR__ . '/vendor/phpstan/phpstan-doctrine/extension.neon',
         __DIR__ . '/vendor/phpstan/phpstan-symfony/extension.neon',
-    ]);
-
-    // basic rules
-    $rectorConfig->importNames();
-    $rectorConfig->importShortClasses(false);
-
-    $rectorConfig->sets([
-        SetList::CODE_QUALITY,
-        LevelSetList::UP_TO_PHP_83,
-    ]);
+    ])
+    ->withImportNames(importShortClasses: false)
+    ->withPreparedSets(codeQuality: true, doctrineCodeQuality: true)
+    ->withPhpSets()
 
     // symfony rules
-    $rectorConfig->symfonyContainerPhp(__DIR__ . '/var/cache/website/dev/App_KernelDevDebugContainer.xml');
-
-    $rectorConfig->sets([
+    ->withSymfonyContainerPhp(__DIR__ . '/var/cache/website/dev/App_KernelDevDebugContainer.xml')
+    ->withSets([
         SymfonySetList::SYMFONY_CODE_QUALITY,
         SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
-        SymfonySetList::SYMFONY_71,
-        DoctrineSetList::ANNOTATIONS_TO_ATTRIBUTES,
-        SymfonySetList::ANNOTATIONS_TO_ATTRIBUTES,
-    ]);
+        // activate when doing updates:
+        // SymfonyLevelSetList::UP_TO_SYMFONY_63,
+        // activate when doing updates:
+        // PHPUnitLevelSetList::UP_TO_PHPUNIT_90,
+        // PHPUnitSetList::PHPUNIT_91,
+        // sulu rules
+        // activate for updates when doing updates:
+        // SuluLevelSetList::UP_TO_SULU_25,
+    ])
 
-    // doctrine rules
-    $rectorConfig->sets([
-        DoctrineSetList::DOCTRINE_CODE_QUALITY,
-    ]);
-
-    // phpunit rules
-    $rectorConfig->sets([
-        PHPUnitSetList::PHPUNIT_100,
-    ]);
-
-    // sulu rules
-    $rectorConfig->sets([
-        SuluLevelSetList::UP_TO_SULU_25,
-    ]);
-
-    // Skip
-    $rectorConfig->skip([
+    ->withSkip([
         ActionSuffixRemoverRector::class,
     ]);
-};
