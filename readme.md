@@ -12,9 +12,10 @@
 
 ## Requirements
 
-* PHP 8.0
-* Symfony >=6.0
-* Symfonymailer
+* Sulu 3.x
+* PHP 8.2
+* Symfony >=7.2
+* Symfonymailer >=7.2
 
 ### Install the bundle
 
@@ -46,11 +47,9 @@ bin/console do:sch:up --force
 Set the following config in your routes_admin.yaml
 
  ```yaml
-app_form_data_api:
-  type: rest
-  prefix: /admin/api
-  resource: Alengo\Bundle\AlengoFormBundle\Controller\Admin\FormDataController
-  name_prefix: app.
+AlengoFormBundle:
+    resource: "@AlengoFormBundle/config/routing_admin.yaml"
+    prefix: /admin/api
  ```
 
 Define you default Sender Email in ENV Config.
