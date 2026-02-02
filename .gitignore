@@ -1,32 +1,9 @@
-# PHPUnit
-/phpunit.xml
-.phpunit.result.cache
-
-# composer
-/composer.phar
-/composer.lock
-/auth.json
+/.idea
+/tools
+/tests
+/.php-cs-fixer.cache
+/.php-cs-fixer.dist.php
+/rector.php
 /vendor
-
-# IDEs
-.idea/*
-*.iml
-*~
-
-# System files
-.DS_Store
-
-# tests
-Tests/Application/var
-Tests/Application/.env.dev.local
-Tests/Application/.env.test.local
-
-# php-cs-fixer
-.php_cs.cache
-
-#LocalDocker
-docker-compose.yml
-.docker
-/var
-
-.php-cs-fixer.cache
+/phpstan.neon
+/composer.lock
