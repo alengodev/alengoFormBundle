@@ -1,0 +1,38 @@
+alengo_form.get_form_data:
+    path: /form-datas/{id}.{_format}
+    controller: Alengo\Bundle\AlengoFormBundle\Controller\Admin\FormDataController::getAction
+    methods: GET
+    defaults:
+        _format: json
+    requirements:
+        _format: json|csv
+        id: \d+
+
+alengo_form.get_form_datas:
+    path: /form-datas.{_format}
+    controller: Alengo\Bundle\AlengoFormBundle\Controller\Admin\FormDataController::cgetAction
+    methods: GET
+    defaults:
+        _format: json
+    requirements:
+        _format: json|csv
+
+alengo_form.put_form_data:
+    path: /form-datas/{id}.{_format}
+    controller: Alengo\Bundle\AlengoFormBundle\Controller\Admin\FormDataController::putAction
+    methods: PUT
+    defaults:
+        _format: json
+    requirements:
+        _format: json|csv
+        id: \d+
+
+alengo_form.delete_form_data:
+    path: /form-datas/{id}.{_format}
+    controller: Alengo\Bundle\AlengoFormBundle\Controller\Admin\FormDataController::deleteAction
+    methods: DELETE
+    defaults:
+        _format: json
+    requirements:
+        _format: json|csv
+        id: \d+

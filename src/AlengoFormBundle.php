@@ -13,12 +13,14 @@ declare(strict_types=1);
 
 namespace Alengo\Bundle\AlengoFormBundle;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Alengo\Bundle\AlengoFormBundle\DependencyInjection\AlengoFormExtension;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
-class AlengoFormBundle extends Bundle
+class AlengoFormBundle extends AbstractBundle
 {
-    public function build(ContainerBuilder $container): void
+    public function getContainerExtension(): ?ExtensionInterface
     {
+        return new AlengoFormExtension();
     }
 }
