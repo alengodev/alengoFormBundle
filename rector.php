@@ -8,16 +8,7 @@ use Rector\Symfony\Set\SymfonySetList;
 
 return RectorConfig::configure()
     ->withPaths([
-        __DIR__ . '/Admin',
-        __DIR__ . '/Api',
-        __DIR__ . '/Controller',
-        __DIR__ . '/DependencyInjection',
-        __DIR__ . '/Entity',
-        __DIR__ . '/Preview',
-        __DIR__ . '/Repository',
-        __DIR__ . '/Resources',
-        __DIR__ . '/Routing',
-        __DIR__ . '/Service',
+        __DIR__ . '/src',
     ])
     ->withRootFiles()
     ->withPHPStanConfigs([
