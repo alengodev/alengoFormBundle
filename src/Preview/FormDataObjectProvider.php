@@ -13,46 +13,76 @@ declare(strict_types=1);
 
 namespace Alengo\Bundle\AlengoFormBundle\Preview;
 
+use Alengo\Bundle\AlengoFormBundle\Controller\FormDataController;
 use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
 use Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository;
-use Sulu\Bundle\PreviewBundle\Preview\Object\PreviewObjectProviderInterface;
+use Sulu\Bundle\PreviewBundle\Preview\PreviewContext;
+use Sulu\Bundle\PreviewBundle\Preview\Provider\PreviewDefaultsProviderInterface;
 
-class FormDataObjectProvider implements PreviewObjectProviderInterface
+class FormDataObjectProvider implements PreviewDefaultsProviderInterface
 {
     public function __construct(private readonly FormDataRepository $formDataRepository)
     {
     }
 
-    public function getObject($id, $locale): ?FormData
+    public function getDefaults(PreviewContext $previewContext): array
     {
-        return $this->formDataRepository->findOneBy(['id' => $id]);
+        $id = $previewContext->getId();
+
+        if (null === $id) {
+            return [];
+        }
+
+        $formData = $this->formDataRepository->findOneBy(['id' => $id]);
+
+        if (!$formData instanceof FormData) {
+            return [];
+        }
+
+        return [
+            'formData' => $formData,
+            '_controller' => FormDataController::class . '::indexAction',
+        ];
     }
 
-    public function getId($object)
+    public function updateValues(PreviewContext $previewContext, array $defaults, array $data): array
     {
-        return $object->getId();
+        $formData = $defaults['formData'] ?? null;
+
+        if (!$formData instanceof FormData) {
+            return $defaults;
+        }
+
+        if (isset($data['data'])) {
+            $formData->setData($data['data']);
+        }
+
+        if (isset($data['receiverMail'])) {
+            $formData->setReceiverMail($data['receiverMail']);
+        }
+
+        if (isset($data['userMail'])) {
+            $formData->setUserMail($data['userMail']);
+        }
+
+        if (isset($data['category'])) {
+            $formData->setCategory($data['category']);
+        }
+
+        if (isset($data['comments'])) {
+            $formData->setComments($data['comments']);
+        }
+
+        return $defaults;
     }
 
-    public function setValues($object, $locale, array $data): void
+    public function updateContext(PreviewContext $previewContext, array $defaults, array $context): array
     {
+        return $defaults;
     }
 
-    public function setContext($object, $locale, array $context): void
+    public function getSecurityContext(PreviewContext $previewContext): ?string
     {
-    }
-
-    public function serialize($object)
-    {
-        return \serialize($object);
-    }
-
-    public function deserialize($serializedObject, $objectClass)
-    {
-        return \unserialize($serializedObject);
-    }
-
-    public function getSecurityContext($id, $locale): ?string
-    {
-        return null; // the security context used in the admin class for this object
+        return FormData::SECURITY_CONTEXT;
     }
 }
