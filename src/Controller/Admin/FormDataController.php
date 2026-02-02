@@ -22,7 +22,6 @@ use Doctrine\ORM\ORMException;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use HandcraftedInTheAlps\RestRoutingBundle\Controller\Annotations\RouteResource;
 use Sulu\Component\Rest\AbstractRestController;
 use Sulu\Component\Rest\Exception\EntityNotFoundException;
 use Sulu\Component\Rest\ListBuilder\Doctrine\DoctrineListBuilderFactoryInterface;
@@ -32,27 +31,18 @@ use Sulu\Component\Rest\RestHelperInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-/**
- * @RouteResource("formData")
- */
 class FormDataController extends AbstractRestController
 {
-    private readonly ViewHandlerInterface $viewHandler;
-
     public function __construct(
         ViewHandlerInterface $viewHandler,
-        TokenStorageInterface $tokenStorage,
         private readonly FieldDescriptorFactoryInterface $fieldDescriptorFactory,
         private readonly DoctrineListBuilderFactoryInterface $listBuilderFactory,
         private readonly RestHelperInterface $restHelper,
         private readonly FormDataRepository $repository,
         private readonly SaveFormService $formService,
     ) {
-        parent::__construct($viewHandler, $tokenStorage);
-
-        $this->viewHandler = $viewHandler;
+        parent::__construct($viewHandler);
     }
 
     public function cgetAction(): Response
@@ -71,7 +61,7 @@ class FormDataController extends AbstractRestController
             $listBuilder->count(),
         );
 
-        return $this->viewHandler->handle(View::create($listRepresentation));
+        return $this->handleView($this->view($listRepresentation));
     }
 
     public function getAction(int $id, Request $request): Response
