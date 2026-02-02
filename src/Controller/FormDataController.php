@@ -21,6 +21,8 @@ use Twig\Environment;
 
 class FormDataController extends AbstractController
 {
+    private const DEFAULT_TEMPLATE = '@AlengoForm/FormData/default.html.twig';
+
     public function __construct(
         private readonly Environment $twig,
     ) {
@@ -28,9 +30,7 @@ class FormDataController extends AbstractController
 
     public function indexAction(FormData $formData, array $attributes = [], bool $preview = false, bool $partial = false): Response
     {
-        $templatePath = null !== $formData->getCategory() && '' !== $formData->getCategory()
-            ? '/form/preview/' . $formData->getCategory() . '.html.twig'
-            : '@AlengoForm/FormData/default.html.twig';
+        $templatePath = $this->resolveTemplatePath($formData);
 
         if ($partial) {
             $content = $this->renderBlockView(
@@ -67,5 +67,22 @@ class FormDataController extends AbstractController
         $twigTemplate = $this->twig->load($template);
 
         return $twigTemplate->renderBlock($block, $attributes);
+    }
+
+    private function resolveTemplatePath(FormData $formData): string
+    {
+        $category = $formData->getCategory();
+
+        if (null === $category || '' === $category) {
+            return self::DEFAULT_TEMPLATE;
+        }
+
+        $categoryTemplate = 'form/preview/' . $category . '.html.twig';
+
+        if ($this->twig->getLoader()->exists($categoryTemplate)) {
+            return $categoryTemplate;
+        }
+
+        return self::DEFAULT_TEMPLATE;
     }
 }

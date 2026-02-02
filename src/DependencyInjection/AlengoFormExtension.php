@@ -63,8 +63,15 @@ class AlengoFormExtension extends Extension implements PrependExtensionInterface
         $container->loadFromExtension('framework', [
             'default_locale' => 'en',
             'translator' => ['paths' => [__DIR__ . '/../../translations/']],
-            // ...
         ]);
+
+        if ($container->hasExtension('twig')) {
+            $container->prependExtensionConfig('twig', [
+                'paths' => [
+                    __DIR__ . '/../Resources/views' => 'AlengoForm',
+                ],
+            ]);
+        }
     }
 
     public function load(array $configs, ContainerBuilder $container): void
