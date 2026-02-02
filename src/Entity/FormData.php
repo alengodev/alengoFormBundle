@@ -25,175 +25,142 @@ class FormData
 
     #[ORM\Column(type: Types::INTEGER)]
     #[ORM\Id, ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
-    private $locale;
+    private string $locale = '';
 
     #[ORM\Column(type: Types::STRING, length: 255)]
-    private $webspaceKey;
+    private string $webspaceKey = '';
 
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $copy = false;
 
     #[ORM\Column(type: Types::JSON)]
-    private $data;
+    private array $data = [];
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
-    private $receiverMail;
+    private ?string $receiverMail = null;
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
-    private $userMail;
+    private ?string $userMail = null;
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
-    private $category;
+    private ?string $category = null;
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
-    private $comments;
+    private ?array $comments = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private $created;
+    private ?\DateTime $created = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private $changed;
+    private ?\DateTime $changed = null;
 
     #[ORM\Column(type: Types::INTEGER)]
     private int $countedComments = 0;
 
-    /**
-     * @return mixed
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
 
-    public function setLocale(mixed $locale): void
+    public function setLocale(string $locale): void
     {
         $this->locale = $locale;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getWebspaceKey()
+    public function getWebspaceKey(): string
     {
         return $this->webspaceKey;
     }
 
-    public function setWebspaceKey(mixed $webspaceKey): void
+    public function setWebspaceKey(string $webspaceKey): void
     {
         $this->webspaceKey = $webspaceKey;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
 
-    public function setData(mixed $data): void
+    public function setData(array $data): void
     {
         $this->data = $data;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCreated()
+    public function getCreated(): ?\DateTime
     {
         return $this->created;
     }
 
-    public function setCreated(mixed $created): void
+    public function setCreated(?\DateTime $created): void
     {
         $this->created = $created;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getChanged()
+    public function getChanged(): ?\DateTime
     {
         return $this->changed;
     }
 
-    public function setChanged(mixed $changed): void
+    public function setChanged(?\DateTime $changed): void
     {
         $this->changed = $changed;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getReceiverMail()
+    public function getReceiverMail(): ?string
     {
         return $this->receiverMail;
     }
 
-    public function setReceiverMail(mixed $receiverMail): void
+    public function setReceiverMail(?string $receiverMail): void
     {
         $this->receiverMail = $receiverMail;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUserMail()
+    public function getUserMail(): ?string
     {
         return $this->userMail;
     }
 
-    public function setUserMail(mixed $userMail): void
+    public function setUserMail(?string $userMail): void
     {
         $this->userMail = $userMail;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getComments()
+    public function getComments(): ?array
     {
         return $this->comments;
     }
 
-    public function setComments(mixed $comments): void
+    public function setComments(?array $comments): void
     {
         $this->comments = $comments;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCountedComments()
+    public function getCountedComments(): int
     {
         return $this->countedComments;
     }
 
-    public function setCountedComments(mixed $countedComments): void
+    public function setCountedComments(int $countedComments): void
     {
         $this->countedComments = $countedComments;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCategory()
+    public function getCategory(): ?string
     {
         return $this->category;
     }
 
-    public function setCategory(mixed $category): void
+    public function setCategory(?string $category): void
     {
         $this->category = $category;
     }

@@ -28,12 +28,19 @@ class SendFormService implements SendFormInterface
     ) {
     }
 
-    public function sendFormDataAsMail(FormData $formData, string $template, string $title, string $receiverMail, $xmlTemplate = false, $files = false, $additionalData = false)
-    {
+    public function sendFormDataAsMail(
+        FormData $formData,
+        string $template,
+        string $title,
+        string $receiverMail,
+        ?string $xmlTemplate = null,
+        ?array $files = null,
+        ?array $additionalData = null,
+    ): bool|string {
         $message = (new TemplatedEmail())
-            ->from(new Address($this->defaultSenderMail, $this->defaultSenderName))
+            ->from(new Address($this->defaultSenderMail ?? '', $this->defaultSenderName ?? ''))
             ->to(new Address($receiverMail))
-            ->replyTo($formData->getData()['email'] ?? $this->defaultSenderMail)
+            ->replyTo($formData->getData()['email'] ?? $this->defaultSenderMail ?? '')
             ->subject($title)
             ->htmlTemplate($template)
             ->context([
@@ -42,11 +49,11 @@ class SendFormService implements SendFormInterface
                 'additionalData' => $additionalData,
             ]);
 
-        if ($xmlTemplate) {
+        if (null !== $xmlTemplate) {
             $message->textTemplate($xmlTemplate);
         }
 
-        if (isset($files) && \is_array($files)) {
+        if (null !== $files) {
             foreach ($files as $attachment) {
                 $message->attachFromPath($attachment);
             }

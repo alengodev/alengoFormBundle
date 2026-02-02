@@ -17,21 +17,20 @@ use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
 use Sulu\Bundle\PreviewBundle\Preview\Preview;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Twig\Environment;
 
 class FormDataController extends AbstractController
 {
-    public function indexAction(FormData $formData, $attributes = [], $preview = false, $partial = false): Response
-    {
-        if (!$formData->getCategory()) {
-            $templatePath = '@AlengoForm/FormData/default.html.twig';
-        } else {
-            $templatePath = '/form/preview/' . $formData->getCategory() . '.html.twig';
-        }
+    public function __construct(
+        private readonly Environment $twig,
+    ) {
+    }
 
-        if (!$formData) {
-            throw new NotFoundHttpException();
-        }
+    public function indexAction(FormData $formData, array $attributes = [], bool $preview = false, bool $partial = false): Response
+    {
+        $templatePath = null !== $formData->getCategory() && '' !== $formData->getCategory()
+            ? '/form/preview/' . $formData->getCategory() . '.html.twig'
+            : '@AlengoForm/FormData/default.html.twig';
 
         if ($partial) {
             $content = $this->renderBlockView(
@@ -62,34 +61,11 @@ class FormDataController extends AbstractController
         return $this->renderView('@SuluWebsite/Preview/preview.html.twig', $parameters);
     }
 
-    /**
-     * Returns rendered part of template specified by block.
-     *
-     * @param mixed $template
-     * @param mixed $block
-     * @param mixed $attributes
-     */
-    protected function renderBlockView($template, $block, $attributes = [], ?Response $response = null): string
+    protected function renderBlockView(string $template, string $block, array $attributes = []): string
     {
-        $twig = $this->container->get('twig');
-        $attributes = $twig->mergeGlobals($attributes);
+        $attributes = $this->twig->mergeGlobals($attributes);
+        $twigTemplate = $this->twig->load($template);
 
-        $template = $twig->load($template);
-
-        $level = \ob_get_level();
-        \ob_start();
-
-        try {
-            $rendered = $template->renderBlock($block, $attributes);
-            \ob_end_clean();
-
-            return $rendered;
-        } catch (\Exception $e) {
-            while (\ob_get_level() > $level) {
-                \ob_end_clean();
-            }
-
-            throw $e;
-        }
+        return $twigTemplate->renderBlock($block, $attributes);
     }
 }

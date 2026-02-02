@@ -15,11 +15,11 @@ namespace Alengo\Bundle\AlengoFormBundle\Repository;
 
 use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * @extends ServiceEntityRepository<FormData>
+ *
  * @method FormData|null find($id, $lockMode = null, $lockVersion = null)
  * @method FormData|null findOneBy(array $criteria, array $orderBy = null)
  * @method FormData[] findAll()
@@ -32,10 +32,6 @@ class FormDataRepository extends ServiceEntityRepository
         parent::__construct($registry, FormData::class);
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
     public function save(FormData $formData): void
     {
         $this->getEntityManager()->persist($formData);
@@ -53,39 +49,49 @@ class FormDataRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
-    public function listFormData($datefrom = '', $dateto = '', $locale = '', $category = '', $webspaceKey = '', $receiverMail = '', $userMail = ''): array
-    {
+    /**
+     * @return FormData[]
+     */
+    public function listFormData(
+        string $datefrom = '',
+        string $dateto = '',
+        string $locale = '',
+        string $category = '',
+        string $webspaceKey = '',
+        string $receiverMail = '',
+        string $userMail = '',
+    ): array {
         $qb = $this->createQueryBuilder('f');
 
         if ($this->isValidDate($datefrom) && $this->isValidDate($dateto)) {
-            $dateTimeFrom = new \DateTime($datefrom . ' 00:00:00');
-            $dateTimeTo = new \DateTime($dateto . ' 23:59:59');
+            $dateTimeFrom = new \DateTimeImmutable($datefrom . ' 00:00:00');
+            $dateTimeTo = new \DateTimeImmutable($dateto . ' 23:59:59');
             $qb->andWhere('(f.created >= :datefrom AND f.created <= :dateto)');
             $qb->setParameter('datefrom', $dateTimeFrom->format('Y-m-d H:i:s'));
             $qb->setParameter('dateto', $dateTimeTo->format('Y-m-d H:i:s'));
         }
 
-        if (!empty($locale)) {
+        if ('' !== $locale) {
             $qb->andWhere('f.locale = :locale');
             $qb->setParameter('locale', $locale);
         }
 
-        if (!empty($category)) {
+        if ('' !== $category) {
             $qb->andWhere('f.category = :category');
             $qb->setParameter('category', $category);
         }
 
-        if (!empty($webspaceKey)) {
+        if ('' !== $webspaceKey) {
             $qb->andWhere('f.webspaceKey = :webspacekey');
             $qb->setParameter('webspacekey', $webspaceKey);
         }
 
-        if (!empty($receiverMail)) {
+        if ('' !== $receiverMail) {
             $qb->andWhere('f.receiverMail = :receivermail');
             $qb->setParameter('receivermail', $receiverMail);
         }
 
-        if (!empty($userMail)) {
+        if ('' !== $userMail) {
             $qb->andWhere('f.userMail = :usermail');
             $qb->setParameter('usermail', $userMail);
         }
@@ -95,8 +101,12 @@ class FormDataRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    private function isValidDate($date)
+    private function isValidDate(string $date): bool
     {
-        return false !== \strtotime((string) $date);
+        if ('' === $date) {
+            return false;
+        }
+
+        return false !== \DateTimeImmutable::createFromFormat('Y-m-d', $date);
     }
 }

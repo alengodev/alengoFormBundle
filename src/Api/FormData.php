@@ -26,38 +26,36 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 #[ExclusionPolicy('all')]
 class FormData
 {
-    public function __construct(FormDataEntity $entity)
-    {
-        // @var FormDataEntity entity
-        $this->entity = $entity;
+    public function __construct(
+        private readonly FormDataEntity $entity,
+    ) {
     }
 
-    #[VirtualProperty()]
+    #[VirtualProperty]
     #[Groups(['fullFormData'])]
     public function getId(): ?int
     {
         return $this->entity->getId();
     }
 
-
     #[SerializedName('created')]
-    #[VirtualProperty()]
+    #[VirtualProperty]
     #[Groups(['fullFormData'])]
-    public function getCreated(): \DateTime
+    public function getCreated(): ?\DateTime
     {
         return $this->entity->getCreated();
     }
 
     #[SerializedName('changed')]
-    #[VirtualProperty()]
+    #[VirtualProperty]
     #[Groups(['fullFormData'])]
-    public function getChanged(): \DateTime
+    public function getChanged(): ?\DateTime
     {
         return $this->entity->getChanged();
     }
 
     #[SerializedName('webspace')]
-    #[VirtualProperty()]
+    #[VirtualProperty]
     #[Groups(['fullFormData'])]
     public function getWebspace(): string
     {
@@ -65,7 +63,7 @@ class FormData
     }
 
     #[SerializedName('locale')]
-    #[VirtualProperty()]
+    #[VirtualProperty]
     #[Groups(['fullFormData'])]
     public function getLocale(): string
     {
@@ -73,16 +71,15 @@ class FormData
     }
 
     #[SerializedName('receiverMail')]
-    #[VirtualProperty()]
+    #[VirtualProperty]
     #[Groups(['fullFormData'])]
     public function getReceiverMail(): ?string
     {
         return $this->entity->getReceiverMail();
     }
 
-
     #[SerializedName('userMail')]
-    #[VirtualProperty()]
+    #[VirtualProperty]
     #[Groups(['fullFormData'])]
     public function getUserMail(): ?string
     {
@@ -90,15 +87,17 @@ class FormData
     }
 
     #[SerializedName('data')]
-    #[VirtualProperty()]
+    #[VirtualProperty]
     #[Groups(['fullFormData'])]
     public function getData(): array
     {
-        $data = [];
-        if (!$this->entity->getData()) {
-            return $data;
+        $entityData = $this->entity->getData();
+        if ([] === $entityData) {
+            return [];
         }
-        foreach ($this->entity->getData() as $key => $dataElement) {
+
+        $data = [];
+        foreach ($entityData as $key => $dataElement) {
             $data[$key] = [
                 'type' => 'field',
                 'data' => \is_array($dataElement) ? $this->getDataAsJsonElement($dataElement) : $dataElement,
@@ -110,48 +109,36 @@ class FormData
         return \array_values($data);
     }
 
-
     #[SerializedName('comments')]
-    #[VirtualProperty()]
+    #[VirtualProperty]
     #[Groups(['fullFormData'])]
     public function getComments(): array
     {
-        if (!$this->entity->getComments()) {
-            return [];
-        }
-
-        return $this->entity->getComments();
+        return $this->entity->getComments() ?? [];
     }
 
-
     #[SerializedName('countedComments')]
-    #[VirtualProperty()]
+    #[VirtualProperty]
     #[Groups(['fullFormData'])]
     public function getCountedComments(): int
     {
         return $this->entity->getCountedComments();
     }
 
-
     #[SerializedName('category')]
-    #[VirtualProperty()]
+    #[VirtualProperty]
     #[Groups(['fullFormData'])]
     public function getCategory(): ?string
     {
         return $this->entity->getCategory();
     }
 
-
     #[SerializedName('copy')]
-    #[VirtualProperty()]
+    #[VirtualProperty]
     #[Groups(['fullFormData'])]
-    public function getCopy(): ?int
+    public function getCopy(): int
     {
-        if ($this->entity->isCopy()) {
-            return 1;
-        }
-
-        return 0;
+        return $this->entity->isCopy() ? 1 : 0;
     }
 
     private function getDataAsJsonElement(array $dataElement): string

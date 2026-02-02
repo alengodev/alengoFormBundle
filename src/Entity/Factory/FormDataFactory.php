@@ -17,20 +17,27 @@ use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
 
 class FormDataFactory
 {
-    public function generateFormDataByData(array $data, string $webspaceKey, string $location, string $category, string $receiverMail, bool $copy = false): FormData
-    {
+    public function generateFormDataByData(
+        array $data,
+        string $webspaceKey,
+        string $locale,
+        string $category,
+        string $receiverMail,
+        bool $copy = false,
+    ): FormData {
         $formData = new FormData();
         $formData->setData($data);
         $formData->setReceiverMail($receiverMail);
         $formData->setCreated(new \DateTime());
         $formData->setChanged(new \DateTime());
         $formData->setCopy($copy);
-        $formData->setLocale($location);
+        $formData->setLocale($locale);
         $formData->setWebspaceKey($webspaceKey);
         $formData->setCategory($category);
 
-        if ($this->getProperty($data, 'email')) {
-            $formData->setUserMail($this->getProperty($data, 'email'));
+        $email = $this->getProperty($data, 'email');
+        if (null !== $email) {
+            $formData->setUserMail($email);
         }
 
         return $formData;
@@ -39,9 +46,11 @@ class FormDataFactory
     public function updateFormDataByData(FormData $formData, array $data): FormData
     {
         $formData->setChanged(new \DateTime());
-        if ($this->getProperty($data, 'comments')) {
-            $formData->setComments($this->getProperty($data, 'comments'));
-            $formData->setCountedComments(\count($this->getProperty($data, 'comments')));
+
+        $comments = $this->getProperty($data, 'comments');
+        if (\is_array($comments)) {
+            $formData->setComments($comments);
+            $formData->setCountedComments(\count($comments));
         } else {
             $formData->setComments([]);
             $formData->setCountedComments(0);
@@ -50,21 +59,8 @@ class FormDataFactory
         return $formData;
     }
 
-    /**
-     * Return property for key or given default value.
-     *
-     * @param array $data
-     * @param string $key
-     * @param string $default
-     *
-     * @return string|null
-     */
-    protected function getProperty($data, $key, $default = null)
+    protected function getProperty(array $data, string $key, mixed $default = null): mixed
     {
-        if (\array_key_exists($key, $data)) {
-            return $data[$key];
-        }
-
-        return $default;
+        return $data[$key] ?? $default;
     }
 }

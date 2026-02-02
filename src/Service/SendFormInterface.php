@@ -17,5 +17,13 @@ use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
 
 interface SendFormInterface
 {
-    public function sendFormDataAsMail(FormData $formData, string $template, string $title, string $receiverMail, $xmlTemplate = false, $files = false, $additionalData = false);
+    public function sendFormDataAsMail(
+        FormData $formData,
+        string $template,
+        string $title,
+        string $receiverMail,
+        ?string $xmlTemplate = null,
+        ?array $files = null,
+        ?array $additionalData = null,
+    ): bool|string;
 }

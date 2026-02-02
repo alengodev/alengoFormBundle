@@ -17,8 +17,6 @@ use Alengo\Bundle\AlengoFormBundle\Api\FormData as FormDataApi;
 use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
 use Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository;
 use Alengo\Bundle\AlengoFormBundle\Service\SaveFormService;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
@@ -34,6 +32,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FormDataController extends AbstractRestController
 {
+    protected static $entityName = FormData::class;
+
     public function __construct(
         ViewHandlerInterface $viewHandler,
         private readonly FieldDescriptorFactoryInterface $fieldDescriptorFactory,
@@ -57,7 +57,7 @@ class FormDataController extends AbstractRestController
             $listBuilder->execute(),
             FormData::RESOURCE_KEY,
             (int) $listBuilder->getCurrentPage(),
-            $limit ?? 0,
+            $limit,
             $listBuilder->count(),
         );
 
@@ -66,12 +66,12 @@ class FormDataController extends AbstractRestController
 
     public function getAction(int $id, Request $request): Response
     {
-        if (!$entity = $this->repository->findById($id)[0]) {
+        $entity = $this->repository->find($id);
+        if (null === $entity) {
             throw new NotFoundHttpException();
         }
 
-        $apiEntity = $this->generateFormDataApiEntity($entity, 'en');
-
+        $apiEntity = $this->generateFormDataApiEntity($entity);
         $view = $this->generateViewContent($apiEntity);
 
         return $this->handleView($view);
@@ -79,22 +79,18 @@ class FormDataController extends AbstractRestController
 
     public function putAction(int $id, Request $request): Response
     {
-        $entity = $this->repository->findById($id)[0];
-        if (!$entity) {
+        $entity = $this->repository->find($id);
+        if (null === $entity) {
             throw new NotFoundHttpException();
         }
 
         $updatedEntity = $this->formService->updateFormData($entity, $request->request->all());
-        $apiEntity = $this->generateFormDataApiEntity($updatedEntity, 'en');
+        $apiEntity = $this->generateFormDataApiEntity($updatedEntity);
         $view = $this->generateViewContent($apiEntity);
 
         return $this->handleView($view);
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
     public function deleteAction(int $id): Response
     {
         try {
@@ -106,9 +102,9 @@ class FormDataController extends AbstractRestController
         return $this->handleView($this->view());
     }
 
-    protected function generateFormDataApiEntity(FormData $entity, string $locale): FormDataApi
+    protected function generateFormDataApiEntity(FormData $entity): FormDataApi
     {
-        return new FormDataApi($entity, $locale);
+        return new FormDataApi($entity);
     }
 
     protected function generateViewContent(FormDataApi $entity): View
