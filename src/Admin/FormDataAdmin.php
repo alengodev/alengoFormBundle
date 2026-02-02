@@ -31,15 +31,18 @@ class FormDataAdmin extends Admin
     final public const FORM_DATA_ADD_FORM_VIEW = 'app.form_data_add_form';
     final public const FORM_DATA_EDIT_FORM_VIEW = 'app.form_data_edit_form';
 
-    public function __construct(private readonly ViewBuilderFactoryInterface $viewBuilderFactory, private readonly SecurityCheckerInterface $securityChecker, private readonly WebspaceManagerInterface $webspaceManager)
-    {
+    public function __construct(
+        private readonly ViewBuilderFactoryInterface $viewBuilderFactory,
+        private readonly SecurityCheckerInterface $securityChecker,
+        private readonly WebspaceManagerInterface $webspaceManager,
+    ) {
     }
 
     public function configureNavigationItems(NavigationItemCollection $navigationItemCollection): void
     {
         if ($this->securityChecker->hasPermission(FormData::SECURITY_CONTEXT, PermissionTypes::VIEW)) {
             $formDataNavigationItem = new NavigationItem('app.form_datas');
-            $formDataNavigationItem->setView(static::FORM_DATA_LIST_VIEW);
+            $formDataNavigationItem->setView(self::FORM_DATA_LIST_VIEW);
             $formDataNavigationItem->setIcon('fa-file-text-o');
             $formDataNavigationItem->setPosition(30);
 
@@ -69,34 +72,34 @@ class FormDataAdmin extends Admin
 
         if ($this->securityChecker->hasPermission(FormData::SECURITY_CONTEXT, PermissionTypes::VIEW)) {
             $listView = $this->viewBuilderFactory
-                ->createListViewBuilder(static::FORM_DATA_LIST_VIEW, '/form_datas/:locale')
+                ->createListViewBuilder(self::FORM_DATA_LIST_VIEW, '/form_datas/:locale')
                 ->setResourceKey(FormData::RESOURCE_KEY)
                 ->setListKey('form_datas')
                 ->setTitle('app.form_datas')
                 ->addListAdapters(['table'])
                 ->addLocales($locales)
-                ->setAddView(static::FORM_DATA_ADD_FORM_VIEW)
-                ->setEditView(static::FORM_DATA_EDIT_FORM_VIEW)
+                ->setAddView(self::FORM_DATA_ADD_FORM_VIEW)
+                ->setEditView(self::FORM_DATA_EDIT_FORM_VIEW)
                 ->addToolbarActions($listToolbarActions);
 
             $viewCollection->add($listView);
 
             $editFormView = $this->viewBuilderFactory
-                ->createResourceTabViewBuilder(static::FORM_DATA_EDIT_FORM_VIEW, '/form_datas/:locale/:id')
+                ->createResourceTabViewBuilder(self::FORM_DATA_EDIT_FORM_VIEW, '/form_datas/:locale/:id')
                 ->setResourceKey(FormData::RESOURCE_KEY)
                 ->addLocales($locales)
-                ->setBackView(static::FORM_DATA_LIST_VIEW);
+                ->setBackView(self::FORM_DATA_LIST_VIEW);
 
             $viewCollection->add($editFormView);
 
             $editDetailsFormView = $this->viewBuilderFactory
-                ->createPreviewFormViewBuilder(static::FORM_DATA_EDIT_FORM_VIEW . '.details', '/details')
+                ->createPreviewFormViewBuilder(self::FORM_DATA_EDIT_FORM_VIEW . '.details', '/details')
                 ->setPreviewCondition('id != null')
                 ->setResourceKey(FormData::RESOURCE_KEY)
-                ->setFormKey(static::FORM_DATA_FORM_KEY)
+                ->setFormKey(self::FORM_DATA_FORM_KEY)
                 ->setTabTitle('sulu_admin.details')
                 ->addToolbarActions($formToolbarActions)
-                ->setParent(static::FORM_DATA_EDIT_FORM_VIEW);
+                ->setParent(self::FORM_DATA_EDIT_FORM_VIEW);
 
             $viewCollection->add($editDetailsFormView);
         }
