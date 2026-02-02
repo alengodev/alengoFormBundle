@@ -12,7 +12,8 @@
 
 ## Requirements
 
-* PHP 8.0
+* Sulu >=2.5
+* PHP >=8.0
 * Symfony >=6.0
 * Symfonymailer
 
