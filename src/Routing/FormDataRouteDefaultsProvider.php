@@ -18,6 +18,7 @@ use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
 use Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository;
 use Sulu\Route\Application\Routing\Matcher\RouteDefaultsProviderInterface;
 use Sulu\Route\Domain\Model\Route;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FormDataRouteDefaultsProvider implements RouteDefaultsProviderInterface
 {
@@ -33,9 +34,15 @@ class FormDataRouteDefaultsProvider implements RouteDefaultsProviderInterface
 
     public function getDefaults(Route $route): array
     {
+        $formData = $this->formDataRepository->findOneBy(['id' => $route->getResourceId(), 'locale' => $route->getLocale()]);
+
+        if (null === $formData) {
+            throw new NotFoundHttpException(\sprintf('No FormData found for id "%s" and locale "%s".', $route->getResourceId(), $route->getLocale()));
+        }
+
         return [
             '_controller' => FormDataController::class . '::indexAction',
-            'formData' => $this->formDataRepository->findOneBy(['id' => $route->getResourceId(), 'locale' => $route->getLocale()]),
+            'formData' => $formData,
         ];
     }
 }
