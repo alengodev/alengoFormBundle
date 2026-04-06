@@ -16,7 +16,8 @@ namespace Alengo\Bundle\AlengoFormBundle\Routing;
 use Alengo\Bundle\AlengoFormBundle\Controller\FormDataController;
 use Alengo\Bundle\AlengoFormBundle\Entity\FormData;
 use Alengo\Bundle\AlengoFormBundle\Repository\FormDataRepository;
-use Sulu\Bundle\RouteBundle\Routing\Defaults\RouteDefaultsProviderInterface;
+use Sulu\Route\Application\Routing\Matcher\RouteDefaultsProviderInterface;
+use Sulu\Route\Domain\Model\Route;
 
 class FormDataRouteDefaultsProvider implements RouteDefaultsProviderInterface
 {
@@ -25,21 +26,16 @@ class FormDataRouteDefaultsProvider implements RouteDefaultsProviderInterface
     ) {
     }
 
-    public function getByEntity($entityClass, $id, $locale = '', $object = null): array
+    public static function getResourceKey(): string
+    {
+        return FormData::RESOURCE_KEY;
+    }
+
+    public function getDefaults(Route $route): array
     {
         return [
             '_controller' => FormDataController::class . '::indexAction',
-            'formData' => $object ?? $this->formDataRepository->findOneBy(['id' => $id, 'locale' => $locale]),
+            'formData' => $this->formDataRepository->findOneBy(['id' => $route->getResourceId(), 'locale' => $route->getLocale()]),
         ];
-    }
-
-    public function isPublished($entityClass, $id, $locale): bool
-    {
-        return true;
-    }
-
-    public function supports($entityClass): bool
-    {
-        return FormData::class === $entityClass;
     }
 }
