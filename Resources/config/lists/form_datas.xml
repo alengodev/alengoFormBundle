@@ -33,7 +33,7 @@
             <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
         </property>
 
-        <property name="data" visibility="no">
+        <property name="data" visibility="never">
             <field-name>data</field-name>
             <entity-name>Alengo\Bundle\AlengoFormBundle\Entity\FormData</entity-name>
         </property>
