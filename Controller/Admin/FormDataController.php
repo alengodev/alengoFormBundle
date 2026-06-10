@@ -63,8 +63,17 @@ class FormDataController extends AbstractRestController
 
         $limit = (int) $listBuilder->getLimit();
 
+        $listData = $listBuilder->execute();
+
+        foreach ($listData as &$row) {
+            if (\array_key_exists('data', $row)) {
+                $row['data'] = $this->formatDataColumn($row['data']);
+            }
+        }
+        unset($row);
+
         $listRepresentation = new PaginatedRepresentation(
-            $listBuilder->execute(),
+            $listData,
             FormData::RESOURCE_KEY,
             (int) $listBuilder->getCurrentPage(),
             $limit ?? 0,
@@ -128,5 +137,26 @@ class FormDataController extends AbstractRestController
         $context->setGroups(['fullFormData']);
 
         return $view->setContext($context);
+    }
+
+    private function formatDataColumn(mixed $data): ?string
+    {
+        if (null === $data) {
+            return null;
+        }
+
+        if (!\is_array($data)) {
+            return (string) $data;
+        }
+
+        $parts = [];
+        foreach ($data as $key => $value) {
+            if (\is_array($value)) {
+                $value = \json_encode($value);
+            }
+            $parts[] = $key . ': ' . $value;
+        }
+
+        return \implode(' | ', $parts);
     }
 }
