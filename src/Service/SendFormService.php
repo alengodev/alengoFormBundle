@@ -55,7 +55,7 @@ class SendFormService implements SendFormInterface
 
         if (null !== $files) {
             foreach ($files as $attachment) {
-                $message->attachFromPath($attachment);
+                $message->attachFromPath(self::localFile($attachment));
             }
         }
 
@@ -66,5 +66,18 @@ class SendFormService implements SendFormInterface
         } catch (TransportExceptionInterface $e) {
             return $e->getMessage();
         }
+    }
+
+    /**
+     * Attachments are read on the server: only existing regular local files. A stream wrapper ("http://", "phar://",
+     * "php://filter") would turn a path that reached the caller from outside into a server-side request or file read.
+     */
+    private static function localFile(mixed $path): string
+    {
+        if (!\is_string($path) || \str_contains($path, '://') || !\is_file($path)) {
+            throw new \InvalidArgumentException(\sprintf('Attachment "%s" is not a local file.', \is_string($path) ? $path : \get_debug_type($path)));
+        }
+
+        return $path;
     }
 }

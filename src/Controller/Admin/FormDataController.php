@@ -26,11 +26,17 @@ use Sulu\Component\Rest\ListBuilder\Doctrine\DoctrineListBuilderFactoryInterface
 use Sulu\Component\Rest\ListBuilder\Metadata\FieldDescriptorFactoryInterface;
 use Sulu\Component\Rest\ListBuilder\PaginatedRepresentation;
 use Sulu\Component\Rest\RestHelperInterface;
+use Sulu\Component\Security\SecuredControllerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class FormDataController extends AbstractRestController
+/**
+ * Admin API of the stored form submissions. As a {@see SecuredControllerInterface} every action is checked by Sulu's
+ * security listener against the "sulu.form.datas" context: GET (list, CSV export, show) needs view, PUT edit and
+ * DELETE delete — the same permissions FormDataAdmin uses to show the navigation item and toolbar actions.
+ */
+class FormDataController extends AbstractRestController implements SecuredControllerInterface
 {
     protected static $entityName = FormData::class;
 
@@ -109,6 +115,19 @@ class FormDataController extends AbstractRestController
         }
 
         return $this->handleView($this->view());
+    }
+
+    public function getSecurityContext(): string
+    {
+        return FormData::SECURITY_CONTEXT;
+    }
+
+    /**
+     * Submissions are not localized: the permission applies to all of them, whatever the admin locale.
+     */
+    public function getLocale(Request $request): ?string
+    {
+        return null;
     }
 
     protected function generateFormDataApiEntity(FormData $entity): FormDataApi
